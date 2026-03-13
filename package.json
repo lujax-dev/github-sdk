@@ -1,0 +1,12 @@
+{
+  "name": "github-sdk",
+  "version": "1.0.0",
+  "description": "An SDK for interacting with the GitHub API",
+  "main": "dist/index.js",
+  "keywords": [
+    "SDK",
+    "GitHub"
+  ],
+  "author": "LewieJ08",
+  "license": "ISC"
+}
