@@ -35,7 +35,7 @@ export interface User {
     company: string | null;
     blog: string | null;
     email: string | null;
-    boi: string | null;
+    bio: string | null;
     twitterUsername: string | null;
     publicRepos: number;
     publicGists: number;
