@@ -21,3 +21,10 @@ export class InvalidTokenError extends GithubSdkError {
         this.name = 'InvalidTokenError';
     }
 }
+
+export class MissingConfigError extends GithubSdkError {
+    constructor(properties: string[]) {
+        super(`GithubClient is missing service dependent config properties: ${properties}`);
+        this.name = 'MissingConfigError';
+    }
+}

@@ -1,15 +1,16 @@
 import { GithubApiError } from "../errors/errors"
 
-interface GithubApiResponse {
+interface GithubApiErrorResponse {
     message: string
 }
 
 export async function request<T>(
+    baseUrl: string, 
     path: string,
-    options: RequestInit, 
+    options: RequestInit = {}, 
     token: string
 ): Promise<T> {
-    const response = await fetch(path, {
+    const response = await fetch(`${baseUrl}${path}`, {
         ...options,
         headers: {
             'X-GitHub-Api-Version': '2022-11-28',
@@ -19,10 +20,11 @@ export async function request<T>(
         },
     })
 
-    const data = await response.json() as GithubApiResponse;
+    const data = await response.json();
 
     if (!response.ok) {
-        throw new GithubApiError(response.status, data.message)
+        const error = data as GithubApiErrorResponse
+        throw new GithubApiError(response.status, error.message)
     }
 
     return data as T
