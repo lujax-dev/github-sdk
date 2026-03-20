@@ -1,19 +1,22 @@
+import { PullRequestService } from "../services/pullrequest.service";
 import { request } from "../utils/request.utils";
 
 interface GithubClientConfig {
-    token: string
+    token: string,
+    owner?: string, 
+    repo?: string
 }
 
 export class GithubClient {
-    private readonly token: string;
+    public readonly pullRequests: PullRequestService;
     public readonly baseUrl: string;
 
-    constructor(config: GithubClientConfig) {
-        this.token = config.token;
-        this.baseUrl = 'https://api.github.com'
+    constructor(public readonly config: GithubClientConfig) {
+        this.pullRequests = new PullRequestService(this);
+        this.baseUrl = 'https://api.github.com';
     }
 
-    public async request<T>(path: string, options: RequestInit): Promise<T> {
-        return request<T>(`${this.baseUrl, path}`, options, this.token)
+    public async request<T>(path: string, options?: RequestInit): Promise<T> {
+        return request<T>(this.baseUrl, path, options, this.config.token)
     }
 }
