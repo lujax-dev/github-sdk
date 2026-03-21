@@ -1,9 +1,7 @@
 import { GithubClient } from "../client/GithubClient";
 import { MissingConfigError } from "../errors/errors";
-import { PullRequest, PullRequestDTO } from "../types/pullrequest.types";
+import { PullRequest, PullRequestDTO, State } from "../types/pullrequest.types";
 import { mapPullRequest, mapPullRequests } from "../utils/mapper.utils";
-
-type State = 'open' | 'closed';
 
 export class PullRequestService {
     private readonly path: string;

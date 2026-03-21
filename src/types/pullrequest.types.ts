@@ -1,5 +1,7 @@
 import { UserDTO, User } from "./user.types";
 
+export type State = 'open' | 'closed';
+
 export interface BranchRefDTO {
     ref : string;
     sha: string;
@@ -9,7 +11,7 @@ export interface PullRequestDTO {
     id: number;
     node_id: string;
     number: number;
-    state: "open" | "closed";
+    state: State;
     locked: boolean;
     draft: boolean;
     title: string;
@@ -40,7 +42,7 @@ export interface PullRequest {
     id: number;
     nodeId: string;
     number: number;
-    state: "open" | "closed";
+    state: State;
     isLocked: boolean;
     isDraft: boolean;
     title: string;

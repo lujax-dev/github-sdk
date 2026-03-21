@@ -16,7 +16,7 @@ export class GithubClient {
         this.baseUrl = 'https://api.github.com';
     }
 
-    public async request<T>(path: string, options?: RequestInit): Promise<T> {
+    public request<T>(path: string, options?: RequestInit): Promise<T> {
         return request<T>(this.baseUrl, path, options, this.config.token)
     }
 }
