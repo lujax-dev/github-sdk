@@ -68,7 +68,7 @@ export function mapPullRequest(dto: PullRequestDTO): PullRequest {
 }
 
 export function mapPullRequests(dtos: PullRequestDTO[]): PullRequest[] {
-    return dtos.map((dto) => mapPullRequest(dto))
+    return dtos.map(dto => mapPullRequest(dto))
 }
 
 export function mapCommit(dto: CommitDTO): Commit {
@@ -94,3 +94,7 @@ export function mapCommit(dto: CommitDTO): Commit {
         parentShas: dto.parents.map(parent => parent.sha)
     }
 } 
+
+export function mapCommits(dtos: CommitDTO[]): Commit[] {
+    return dtos.map(dto => mapCommit(dto))
+}
