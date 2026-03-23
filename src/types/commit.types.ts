@@ -45,6 +45,7 @@ export interface CommitDTO {
 
 export interface Commit {
   sha: string;
+  nodeId: string;
   message: string;
   author: {
     name: string;

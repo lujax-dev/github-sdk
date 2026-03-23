@@ -1,7 +1,8 @@
 import { GithubClient } from "../client/GithubClient";
 import { MissingConfigError } from "../errors/errors";
+import { Commit, CommitDTO } from "../types/commit.types";
 import { PullRequest, PullRequestDTO, State } from "../types/pullrequest.types";
-import { mapPullRequest, mapPullRequests } from "../utils/mapper.utils";
+import { mapCommit, mapCommits, mapPullRequest, mapPullRequests } from "../utils/mapper.utils";
 
 export class PullRequestService {
     private readonly path: string;
@@ -67,5 +68,10 @@ export class PullRequestService {
                 maintainer_can_modify: maintainerCanModify
             })
         });
-    }   
+    } 
+    
+    public async listCommits(pullNumber: number): Promise<Commit[]> {
+        const data = await this.client.request<CommitDTO[]>(`${this.path}/${pullNumber}/commits`);
+        return mapCommits(data)
+    }
 }
