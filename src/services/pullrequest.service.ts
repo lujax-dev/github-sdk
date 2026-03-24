@@ -91,7 +91,19 @@ export class PullRequestService {
         return mapPullRequestFiles(response.data)
     }
  
-    public checkMergeStatus(pullNumber: number) {
-        this.client.request(`${this.path}/${pullNumber}/merge`)
+    public async isMerged(pullNumber: number): Promise<boolean> {
+        let isMerged = false;
+        const reponse = await this.client.request<null>(`${this.path}/${pullNumber}/merge`);
+
+        switch (reponse.status) {
+            case 204:
+                isMerged = true;
+                break;
+            case 404:
+                isMerged = false;
+                break;
+        }
+
+        return isMerged;
     }
  }
