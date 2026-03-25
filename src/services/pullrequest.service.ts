@@ -92,18 +92,12 @@ export class PullRequestService {
     }
  
     public async isMerged(pullNumber: number): Promise<boolean> {
-        let isMerged = false;
-        const reponse = await this.client.request<null>(`${this.path}/${pullNumber}/merge`);
+        const response = await this.client.request<null>(`${this.path}/${pullNumber}/merge`);
 
-        switch (reponse.status) {
-            case 204:
-                isMerged = true;
-                break;
-            case 404:
-                isMerged = false;
-                break;
+        if (response.status === 204) {
+            return true;
         }
 
-        return isMerged;
+        return false
     }
  }
