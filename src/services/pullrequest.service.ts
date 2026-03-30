@@ -119,4 +119,13 @@ export class PullRequestService {
             })
         });
     }
+
+    public updateBranch(pullNumber: number, expectedHeadSha?: string) {
+        return this.client.request(`${this.path}/${pullNumber}/update-branch`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                expected_head_sha: expectedHeadSha
+            })
+        })
+    }
 }
