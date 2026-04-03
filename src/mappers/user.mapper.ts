@@ -24,3 +24,7 @@ export function mapUser(dto: UserDTO): User {
         updatedAt: dto.updated_at,
     }
 }
+
+export function mapUsers(dtos: UserDTO[]): User[] {
+    return dtos.map(dto => mapUser(dto));
+}

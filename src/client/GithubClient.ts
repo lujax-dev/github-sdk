@@ -1,4 +1,5 @@
 import { PullRequestService } from "../services/pullrequest.service";
+import { UserService } from "../services/user.service";
 import { ApiResponse, request } from "../utils/request.utils";
 
 interface GithubClientConfig {
@@ -14,6 +15,7 @@ interface GithubClientConfig {
  */
 export class GithubClient {
     public readonly pullRequests: PullRequestService;
+    public readonly users: UserService;
     public readonly baseUrl: string; 
 
     /**
@@ -32,6 +34,7 @@ export class GithubClient {
      */
     constructor(public readonly config: GithubClientConfig) {
         this.pullRequests = new PullRequestService(this);
+        this.users = new UserService(this);
         this.baseUrl = 'https://api.github.com';
     }
 
