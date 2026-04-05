@@ -1,28 +1,20 @@
 {
   "compilerOptions": {
-    // Environment setup & latest features
-    "types": ["bun"],
-    "lib": ["ESNext"],
-    "target": "ESNext",
-    "module": "Preserve",
-    "moduleDetection": "force",
-    "allowJs": true,
-
+    "target": "ES2022",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "declaration": true,
-    "rootDir": "src",
-    "outDir": "dist",
-
-    // Best practices
     "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true,
-    "noImplicitOverride": true,
-
-    // Some stricter flags 
+    "resolveJsonModule": true,
+    "noImplicitAny": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,  
+    "noUnusedParameters": true,
+    "sourceMap": true
   },
-  "include": ["src"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "tests"]
 }
