@@ -1,3 +1,7 @@
+import { GithubClientConfig } from "../client/GithubClient";
+
+type ConfigKeys = keyof GithubClientConfig;
+
 export class GithubSdkError extends Error {
     public readonly exitCode: number;
 
@@ -23,7 +27,7 @@ export class InvalidTokenError extends GithubSdkError {
 }
 
 export class MissingConfigError extends GithubSdkError {
-    constructor(properties: string[]) {
+    constructor(properties: ConfigKeys[]) {
         super(`GithubClient is missing service dependent config properties: ${properties}`);
         this.name = 'MissingConfigError';
     }

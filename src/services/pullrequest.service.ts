@@ -48,7 +48,7 @@ export class PullRequestService {
     private readonly path: string;
 
     constructor(private readonly client: GithubClient) {
-        if (!this.client.config.owner || !this.client.config.repo) {
+        if (!client.config.owner || !client.config.repo) {
             throw new MissingConfigError(['owner: string', 'repo: string']) 
         }
 

@@ -15,11 +15,11 @@ interface UpdateUserParams {
 
 export class UserService {
     private readonly path: string;
-    private readonly pluralPath: string; 
+    private readonly authPath: string; 
 
     constructor(private readonly client: GithubClient) {
-        this.path = '/user'
-        this.pluralPath = '/users'
+        this.path = '/users';
+        this.authPath = '/user';
     }
 
     /**
@@ -32,7 +32,7 @@ export class UserService {
      * ``` 
      */
     public async getAuthenticated(): Promise<User> {
-        const response = await this.client.request<UserDTO>(this.path);
+        const response = await this.client.request<UserDTO>(this.authPath);
         return mapUser(response.data);
     }
 
@@ -109,7 +109,7 @@ export class UserService {
      * ```
      */
     public async list(): Promise<User[]> {
-        const response = await this.client.request<UserDTO[]>(this.pluralPath);
+        const response = await this.client.request<UserDTO[]>(this.authPath);
         return mapUsers(response.data);
     }
 
@@ -124,7 +124,7 @@ export class UserService {
      * ```
      */
     public async getByUsername(username: string): Promise<User> {
-        const response = await this.client.request<UserDTO>(`${this.pluralPath}/${username}`);
+        const response = await this.client.request<UserDTO>(`${this.authPath}/${username}`);
         return mapUser(response.data);
     }
 }
