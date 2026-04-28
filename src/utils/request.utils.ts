@@ -2,6 +2,8 @@ import { GithubApiError } from "../errors/errors"
 
 interface GithubApiErrorResponse {
     message: string
+    documentation_url?: string;
+    details?: unknown; 
 }
 
 export interface ApiResponse<T>{
