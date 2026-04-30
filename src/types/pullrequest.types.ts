@@ -151,3 +151,14 @@ export interface MergePullRequestPayload {
     sha?: string;
     merge_method?: PullRequestMergeMethod;
 }
+
+export interface MergePullRequestResponse {
+    sha: string;
+    merged: boolean;
+    message: string;
+}
+
+export interface UpdatePullRequestBranchResponse {
+    message: string;
+    url: string;
+}

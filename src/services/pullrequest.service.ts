@@ -8,6 +8,8 @@ import {
     PullRequestFile, 
     PullRequestFileDTO,
     UpdatePullRequestParams,
+    MergePullRequestResponse,
+    UpdatePullRequestBranchResponse
 } from "../types/pullrequest.types";
 import { 
     mapCreatePullRequestParams,
@@ -15,7 +17,7 @@ import {
     mapPullRequest, 
     mapPullRequestFiles, 
     mapPullRequests, 
-    mapUpdatePullRequestParams
+    mapUpdatePullRequestParams,
 } from "../mappers/pullrequest.mapper";
 import { mapCommits } from "../mappers/commit.mapper";
 import { assertConfig } from "../utils/config.utils";
@@ -47,6 +49,7 @@ export class PullRequestService {
      * Create a pull request
      * 
      * @param params Configuration for the pull request
+     * @returns Data of the created pull request
      *       
      * @example 
      * ```ts
@@ -58,12 +61,13 @@ export class PullRequestService {
      * });
      * ```
      */
-    public create(params: CreatePullRequestParams) {
+    public async create(params: CreatePullRequestParams): Promise<PullRequest> {
         const body = mapCreatePullRequestParams(params);
-        return this.client.request(this.path, {
+        const response = await this.client.request<PullRequestDTO>(this.path, {
             method: 'POST',
             body: JSON.stringify(body)
-        })
+        });
+        return mapPullRequest(response.data);
     }
 
     /**
@@ -86,6 +90,7 @@ export class PullRequestService {
      * Update a pull request 
      * 
      * @param params Configuration for the pull request to update
+     * @returns Data of the updated pull request
      * 
      * @example
      * ```ts
@@ -98,12 +103,13 @@ export class PullRequestService {
      * });
      * ```
      */
-    public update(params: UpdatePullRequestParams) {
+    public async update(params: UpdatePullRequestParams): Promise<PullRequest> {
         const body = mapUpdatePullRequestParams(params)
-        return this.client.request(`${this.path}/${params.pullNumber}`, {
+        const response = await this.client.request<PullRequestDTO>(`${this.path}/${params.pullNumber}`, {
             method: 'PATCH',
             body: JSON.stringify(body)
         });
+        return mapPullRequest(response.data);
     } 
     
     /**
@@ -163,6 +169,7 @@ export class PullRequestService {
      * Merge a pull request into the base branch
      * 
      * @param params Configuration for the pull request to merge
+     * @returns Confirmation of merge with SHA of merge commit
      * 
      * @example
      * ```ts 
@@ -173,12 +180,13 @@ export class PullRequestService {
      * });
      * ```
      */
-    public merge(params: MergePullRequestParams) {
+    public async merge(params: MergePullRequestParams): Promise<MergePullRequestResponse> {
         const body = mapMergePullRequestParams(params);
-        return this.client.request(`${this.path}/${params.pullNumber}/merge`, {
+        const response = await this.client.request<MergePullRequestResponse>(`${this.path}/${params.pullNumber}/merge`, {
             method: 'PUT',
             body: JSON.stringify(body)
         });
+        return response.data;
     }
 
     /**
@@ -187,18 +195,20 @@ export class PullRequestService {
      * @param pullNumber The number that identifies the pull request
      * @param expectedHeadSha The expected SHA of the pull requests HEAD ref. 
      * This is the most recent commit of the pull request's branch
+     * @returns Message and URL of pull request
      *  
      * @example 
      * ```ts  
      * await github.pullRequests.updateBranch(8, 6dcb09b5b57875f334f61aebed695e2e4193db5e)
      * ```
      */
-    public updateBranch(pullNumber: number, expectedHeadSha?: string) {
-        return this.client.request(`${this.path}/${pullNumber}/update-branch`, {
+    public async updateBranch(pullNumber: number, expectedHeadSha?: string): Promise<UpdatePullRequestBranchResponse> {
+        const response = await this.client.request<UpdatePullRequestBranchResponse>(`${this.path}/${pullNumber}/update-branch`, {
             method: 'PUT',
             body: JSON.stringify({
                 expected_head_sha: expectedHeadSha
             })
-        })
+        });
+        return response.data;
     }
 }
