@@ -199,7 +199,7 @@ export class PullRequestService {
      *  
      * @example 
      * ```ts  
-     * await github.pullRequests.updateBranch(8, 6dcb09b5b57875f334f61aebed695e2e4193db5e)
+     * await github.pullRequests.updateBranch(8, 6dcb09b5b57875f334f61aebed695e2e4193db5e);
      * ```
      */
     public async updateBranch(pullNumber: number, expectedHeadSha?: string): Promise<UpdatePullRequestBranchResponse> {
