@@ -30,6 +30,7 @@ export class UserService {
      * Update the authenticated user via token
      * 
      * @param params Configuration for the user to update
+     * @returns Data of the updated user
      * 
      * @example 
      * ```ts 
@@ -41,12 +42,13 @@ export class UserService {
      * });
      * ```
      */
-    public updateAuthenticated(params: UpdateUserParams) {
+    public async updateAuthenticated(params: UpdateUserParams): Promise<User> {
         const body = mapUpdateUserParams(params);
-        return this.client.request(this.path, {
+        const response = await this.client.request<UserDTO>(this.path, {
             method: 'PATCH',
             body: JSON.stringify(body)
-        })
+        });
+        return mapUser(response.data);
     }
 
     /**
