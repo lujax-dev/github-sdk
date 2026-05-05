@@ -1,4 +1,15 @@
-import { RepositoryDTO, Repository, CreateRepositoryParams, CreateRepositoryPayload, UpdateRepositoryParams, UpdateRepositoryPayload } from "../types/repository.types";
+import { 
+    RepositoryDTO,
+    Repository,
+    CreateRepositoryParams, 
+    CreateRepositoryPayload, 
+    UpdateRepositoryParams, 
+    UpdateRepositoryPayload, 
+    RepositoryActivityDTO, 
+    RepositoryActivity, 
+    RepositoryActivityTypeDTO,
+    RepositoryActivityType
+} from "../types/repository.types";
 import { mapUser } from "./user.mapper";
 
 export function mapRepository(dto: RepositoryDTO): Repository {
@@ -30,6 +41,40 @@ export function mapRepository(dto: RepositoryDTO): Repository {
 
 export function mapRepositories(dtos: RepositoryDTO[]): Repository[] {
     return dtos.map(dto => mapRepository(dto));
+}
+
+export function mapActivityType(dto: RepositoryActivityTypeDTO): RepositoryActivityType  {
+    switch (dto) {
+        case "push":
+            return "push";
+        case "force_push":
+            return "forcePush";
+        case "branch_deletion":
+            return "branchDeletion";
+        case "branch_creation":
+            return "branchCreation";
+        case "pr_merge":
+            return "prMerge";
+        case "merge_queue_merge":
+            return "mergeQueueMerge";
+    }
+}
+
+export function mapRepositoryActivity(dto: RepositoryActivityDTO): RepositoryActivity {
+    return {
+        id: dto.id,
+        nodeId: dto.node_id,
+        before: dto.before,
+        after: dto.after,
+        ref: dto.ref,
+        timestamp: new Date(dto.timestamp),
+        activityType: mapActivityType(dto.activity_type),
+        actor: dto.actor ? mapUser(dto.actor) : null,
+    }
+}
+
+export function mapRepositoryActivities(dtos: RepositoryActivityDTO[]): RepositoryActivity[] {
+    return dtos.map(dto => mapRepositoryActivity(dto));
 }
 
 export function mapCreateRepositoryParams(params: CreateRepositoryParams): CreateRepositoryPayload {
