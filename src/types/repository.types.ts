@@ -2,6 +2,22 @@ import { User, UserDTO } from "./user.types";
 
 export type RepositoryVisibility = "public" | "private" | "internal";
 
+export type RepositoryActivityTypeDTO =
+    | "push"
+    | "force_push"
+    | "branch_deletion"
+    | "branch_creation"
+    | "pr_merge"
+    | "merge_queue_merge";
+
+export type RepositoryActivityType =
+    | "push"
+    | "forcePush"
+    | "branchDeletion"
+    | "branchCreation"
+    | "prMerge"
+    | "mergeQueueMerge";
+
 export interface RepositoryDTO {
     id: number;
     node_id: string;
@@ -50,6 +66,28 @@ export interface Repository {
     size: number;
     topics?: string[];
     visibility: RepositoryVisibility;
+}
+
+export interface RepositoryActivityDTO {
+    id: number;
+    node_id: string;
+    before: string;
+    after: string;
+    ref: string;
+    timestamp: string; 
+    activity_type: RepositoryActivityTypeDTO;
+    actor: UserDTO| null;
+}
+
+export interface RepositoryActivity {
+    id: number;
+    nodeId: string;
+    before: string;
+    after: string;
+    ref: string;
+    timestamp: Date;
+    activityType: RepositoryActivityType;
+    actor: User | null;
 }
 
 export interface CreateRepositoryParams {
