@@ -157,12 +157,7 @@ export class PullRequestService {
      */
     public async isMerged(pullNumber: number): Promise<boolean> {
         const response = await this.client.request<null>(`${this.path}/${pullNumber}/merge`);
-
-        if (response.status === 204) {
-            return true;
-        }
-
-        return false
+        return response.status === 204;
     }
 
     /**
