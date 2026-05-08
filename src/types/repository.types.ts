@@ -2,6 +2,22 @@ import { User, UserDTO } from "./user.types";
 
 export type RepositoryVisibility = "public" | "private" | "internal";
 
+export type RepositoryActivityTypeDTO =
+    | "push"
+    | "force_push"
+    | "branch_deletion"
+    | "branch_creation"
+    | "pr_merge"
+    | "merge_queue_merge";
+
+export type RepositoryActivityType =
+    | "push"
+    | "forcePush"
+    | "branchDeletion"
+    | "branchCreation"
+    | "prMerge"
+    | "mergeQueueMerge";
+
 export interface RepositoryDTO {
     id: number;
     node_id: string;
@@ -50,6 +66,178 @@ export interface Repository {
     size: number;
     topics?: string[];
     visibility: RepositoryVisibility;
+}
+
+export interface RepositoryActivityDTO {
+    id: number;
+    node_id: string;
+    before: string;
+    after: string;
+    ref: string;
+    timestamp: string; 
+    activity_type: RepositoryActivityTypeDTO;
+    actor: UserDTO| null;
+}
+
+export interface RepositoryActivity {
+    id: number;
+    nodeId: string;
+    before: string;
+    after: string;
+    ref: string;
+    timestamp: Date;
+    activityType: RepositoryActivityType;
+    actor: User | null;
+}
+
+export interface Status {
+    enabled: boolean;
+}
+
+export interface DependabotSecurityUpdatesStatus extends Status {
+    paused: boolean;
+}
+
+export interface ImmutableReleasesStatusDTO extends Status {
+    enforced_by_owner: boolean;
+}
+
+export interface ImmutableReleasesStatus extends Status {
+    enforcedByOwner: boolean;
+}
+
+export interface CodeownersError {
+    line: number;
+    column: number;
+    kind: string;
+    message: string;
+    path: string;
+    source?: string;
+    suggestion?: string | null;
+}
+
+export interface CodeownersErrorsResponse {
+    errors: CodeownersError[];
+}
+
+export interface RepositoryLanguages {
+    [language: string]: number;
+}
+
+
+export interface RepositoryTagCommit {
+    sha: string;
+    url: string;
+}
+
+export interface RepositoryTag {
+    name: string;
+    nodeId: string;
+    zipballUrl: string;
+    tarballUrl: string;
+    commit: RepositoryTagCommit;
+}
+
+export interface RepositoryTagDTO {
+    name: string;
+    node_id: string;
+    zipball_url: string;
+    tarball_url: string;
+    commit: RepositoryTagCommit;
+}
+
+export interface TeamPermissionsDTO {
+    pull: boolean;
+    triage: boolean;
+    push: boolean;
+    maintain: boolean;
+    admin: boolean;
+}
+
+export interface TeamParentDTO {
+    id: number;
+    node_id: string;
+    url: string;
+    members_url: string;
+    name: string;
+    description: string | null;
+    permission: string;
+    privacy?: string;
+    notification_setting?: string;
+    html_url: string;
+    repositories_url: string;
+    slug: string;
+    ldap_dn?: string;
+    type: "enterprise" | "organization";
+    organization_id?: number;
+    enterprise_id?: number;
+}
+
+export interface TeamDTO {
+    id: number;
+    node_id: string;
+    name: string;
+    slug: string;
+    description: string | null;
+    privacy?: string;
+    notification_setting?: string;
+    permission: string;
+    permissions?: TeamPermissionsDTO;
+    url: string;
+    html_url: string;
+    members_url: string;
+    repositories_url: string;
+    type: "enterprise" | "organization";
+    organization_id?: number;
+    enterprise_id?: number;
+    parent: TeamParentDTO | null;
+}
+
+export interface TeamPermissions {
+    pull: boolean;
+    triage: boolean;
+    push: boolean;
+    maintain: boolean;
+    admin: boolean;
+}
+
+export interface TeamParent {
+    id: number;
+    nodeId: string;
+    url: string;
+    membersUrl: string;
+    name: string;
+    description: string | null;
+    permission: string;
+    privacy?: string;
+    notificationSetting?: string;
+    htmlUrl: string;
+    repositoriesUrl: string;
+    slug: string;
+    ldapDn?: string;
+    type: "enterprise" | "organization";
+    organizationId?: number;
+    enterpriseId?: number;
+}
+
+export interface Team {
+    id: number;
+    nodeId: string;
+    name: string;
+    slug: string;
+    description: string | null;
+    privacy?: string;
+    notificationSetting?: string;
+    permission: string;
+    permissions?: TeamPermissions;
+    url: string;
+    htmlUrl: string;
+    membersUrl: string;
+    repositoriesUrl: string;
+    type: "enterprise" | "organization";
+    organizationId?: number;
+    enterpriseId?: number;
+    parent: TeamParent | null;
 }
 
 export interface CreateRepositoryParams {

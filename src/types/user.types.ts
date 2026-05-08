@@ -45,6 +45,14 @@ export interface User {
     updatedAt: string;
 }
 
+export interface ContributerDTO extends UserDTO {
+    contributions: number;
+}
+
+export interface Contributer extends User {
+    contributions: number;
+}
+
 export interface UpdateUserParams {
     name?: string;
     email?: string;

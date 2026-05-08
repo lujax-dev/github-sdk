@@ -11,7 +11,8 @@ export interface GithubClientConfig {
 }
 
 /**
- * Client for interacting with the GitHub API 
+ * Client for interacting with the GitHub API
+ *  
  * @public
  */
 export class GithubClient {
@@ -43,6 +44,7 @@ export class GithubClient {
 
     /**
      * Send a direct http request to the GitHub API
+     * 
      * @param path Following https://api.github.com
      * @param options Request options
      * @returns Value based on path
