@@ -53,7 +53,7 @@ export class PullRequestService {
      *       
      * @example 
      * ```ts
-     * await github.pullRequests.create({
+     * github.pullRequests.create({
      *     title: 'Cool new feature',
      *     body: 'This feature is very helpful and needs pulling',
      *     head: 'LewieJ08:dev',
@@ -94,7 +94,7 @@ export class PullRequestService {
      * 
      * @example
      * ```ts
-     * await github.pullRequests.update({
+     * github.pullRequests.update({
      *     pullNumber: 8,
      *     title: 'new title',
      *     body: 'updated body',
@@ -168,7 +168,7 @@ export class PullRequestService {
      * 
      * @example
      * ```ts 
-     * await github.pullRequests.merge({
+     * github.pullRequests.merge({
      *     pullNumber: 8,
      *     commitTitle: 'Expand docs',
      *     commitMessage: 'Add docs for new methods'
@@ -194,7 +194,7 @@ export class PullRequestService {
      *  
      * @example 
      * ```ts  
-     * await github.pullRequests.updateBranch(8, 6dcb09b5b57875f334f61aebed695e2e4193db5e);
+     * github.pullRequests.updateBranch(8, 6dcb09b5b57875f334f61aebed695e2e4193db5e);
      * ```
      */
     public async updateBranch(pullNumber: number, expectedHeadSha?: string): Promise<UpdatePullRequestBranchResponse> {
