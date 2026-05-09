@@ -357,7 +357,7 @@ export class RepositoryService {
      */
     public async enablePrivateVulnerabilityReporting(): Promise<boolean> {
         assertConfig(this.client, ['owner', 'repo']);
-        const response = await this.client.request(`${this.path}/private-vulnerability-reporting`, {
+        const response = await this.client.request<null>(`${this.path}/private-vulnerability-reporting`, {
             method: 'PUT'
         });
         return response.status === 204;
