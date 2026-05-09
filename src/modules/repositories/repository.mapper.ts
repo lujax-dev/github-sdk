@@ -1,26 +1,28 @@
 import { 
-    RepositoryDTO,
     Repository,
     CreateRepositoryParams, 
     CreateRepositoryPayload, 
     UpdateRepositoryParams, 
     UpdateRepositoryPayload, 
-    RepositoryActivityDTO, 
     RepositoryActivity, 
-    RepositoryActivityTypeDTO,
     RepositoryActivityType,
-    ImmutableReleasesStatusDTO,
     ImmutableReleasesStatus,
     RepositoryTag,
-    RepositoryTagDTO,
-    TeamDTO,
     Team,
     TeamParent,
-    TeamParentDTO,
-    TeamPermissionsDTO,
     TeamPermissions
-} from "../types/repository.types";
-import { mapUser } from "./user.mapper";
+} from "./repository.types";
+import { 
+    RepositoryDTO,
+    RepositoryActivityTypeDTO,
+    RepositoryActivityDTO,
+    ImmutableReleasesStatusDTO,
+    RepositoryTagDTO,
+    TeamPermissionsDTO,
+    TeamParentDTO,
+    TeamDTO
+} from "./repository.dto";
+import { mapUser } from "../users/user.mapper";
 
 export function mapRepository(dto: RepositoryDTO): Repository {
     return {

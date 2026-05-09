@@ -1,4 +1,4 @@
-import { GithubClient } from "../client/GithubClient";
+import { GithubClient } from "../../client/GithubClient";
 import { 
     mapCreateRepositoryParams,
     mapImmutableReleasesStatus,
@@ -8,29 +8,32 @@ import {
     mapRepositoryTags, 
     mapTeams, 
     mapUpdateRepositoryParams 
-} from "../mappers/repository.mapper";
-import { mapContributers} from "../mappers/user.mapper";
+} from "./repository.mapper";
+import { mapContributers} from "../users/user.mapper";
 import { 
     Repository, 
-    RepositoryDTO,
     CreateRepositoryParams, 
     UpdateRepositoryParams,
-    RepositoryActivityDTO,
     RepositoryActivity,
     DependabotSecurityUpdatesStatus,
     CodeownersError,
     CodeownersErrorsResponse,
     ImmutableReleasesStatus,
-    ImmutableReleasesStatusDTO,
     RepositoryLanguages,
     Status,
     RepositoryTag,
-    RepositoryTagDTO,
     Team,
+} from "./repository.types";
+import { 
+    RepositoryDTO,
+    RepositoryActivityDTO,
+    ImmutableReleasesStatusDTO,
+    RepositoryTagDTO,
     TeamDTO
-} from "../types/repository.types";
-import { Contributer, ContributerDTO } from "../types/user.types";
-import { assertConfig } from "../utils/config.utils";
+} from "./repository.dto";
+import { Contributer } from "../users/user.types";
+import { ContributerDTO } from "../users/user.dto";
+import { assertConfig } from "../../shared/utils/config.utils";
 
 export class RepositoryService {
     private readonly path: string;

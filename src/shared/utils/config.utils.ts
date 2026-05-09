@@ -1,5 +1,5 @@
-import { GithubClient, GithubClientConfig } from "../client/GithubClient";
-import { MissingConfigError } from "../errors/errors";
+import { GithubClient, GithubClientConfig } from "../../client/GithubClient";
+import { MissingConfigError } from "../errors/MissingConfigError";
 
 export function assertConfig<K extends keyof GithubClientConfig>(
     client: GithubClient,

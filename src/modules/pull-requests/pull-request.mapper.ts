@@ -1,9 +1,6 @@
 import { 
     PullRequest, 
-    PullRequestDTO, 
     BranchRef, 
-    BranchRefDTO,
-    PullRequestFileDTO,
     PullRequestFile,
     CreatePullRequestParams,
     CreatePullRequestPayload,
@@ -11,8 +8,13 @@ import {
     UpdatePullRequestPayload,
     MergePullRequestParams,
     MergePullRequestPayload
-} from "../types/pullrequest.types"
-import { mapUser } from "./user.mapper"
+} from "./pull-request.types"
+import { 
+    BranchRefDTO, 
+    PullRequestDTO, 
+    PullRequestFileDTO 
+} from "./pull-request.dto"
+import { mapUser } from "../users/user.mapper"
 
 export function mapBranchRef(dto: BranchRefDTO): BranchRef {
     return {
