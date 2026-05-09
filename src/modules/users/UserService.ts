@@ -35,7 +35,7 @@ export class UserService {
      * 
      * @example 
      * ```ts 
-     * await github.users.updateAuthenticated({
+     * github.users.updateAuthenticated({
      *     name: 'John Smith',
      *     email: 'John123@example.com',
      *     hireable: true,
