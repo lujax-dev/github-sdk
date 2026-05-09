@@ -1,5 +1,6 @@
-import { Commit, CommitDTO } from "../types/commit.types"
-import { mapUser } from "./user.mapper"
+import { Commit } from "./commit.types"
+import { CommitDTO } from "./commit.dto"
+import { mapUser } from "../users/user.mapper"
 
 
 export function mapCommit(dto: CommitDTO): Commit {

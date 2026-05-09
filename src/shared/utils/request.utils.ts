@@ -1,4 +1,4 @@
-import { GithubApiError } from "../errors/errors"
+import { GithubApiError } from "../errors/GithubApiError";
 
 interface GithubApiErrorResponse {
     message: string

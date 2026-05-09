@@ -1,7 +1,7 @@
-import { PullRequestService } from "../services/pullrequest.service";
-import { RepositoryService } from "../services/repository.service";
-import { UserService } from "../services/user.service";
-import { ApiResponse, request } from "../utils/request.utils";
+import { PullRequestService } from "../modules/pull-requests/PullRequestService";
+import { RepositoryService } from "../modules/repositories/RepositoryService";
+import { UserService } from "../modules/users/UserService";
+import { ApiResponse, request } from "../shared/utils/request.utils";
 
 export interface GithubClientConfig {
     token: string,

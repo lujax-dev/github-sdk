@@ -1,11 +1,13 @@
 import { 
     UpdateUserParams, 
     UpdateUserPayload, 
-    User, 
+    User,
+    Contributer
+} from "./user.types";
+import {
     UserDTO,
-    Contributer,
-    ContributerDTO
-} from "../types/user.types"
+    ContributerDTO 
+} from "./user.dto";
 
 export function mapUser(dto: UserDTO): User {
     return {

@@ -1,16 +1,16 @@
-import { GithubClient } from "../client/GithubClient";
-import { Commit, CommitDTO } from "../types/commit.types";
+import { GithubClient } from "../../client/GithubClient"
+import { Commit } from "../commits/commit.types";
+import { CommitDTO } from "../commits/commit.dto";
 import {
     CreatePullRequestParams,
     MergePullRequestParams,
     PullRequest,
-    PullRequestDTO, 
     PullRequestFile, 
-    PullRequestFileDTO,
     UpdatePullRequestParams,
     MergePullRequestResponse,
     UpdatePullRequestBranchResponse
-} from "../types/pullrequest.types";
+} from "./pull-request.types";
+import { PullRequestDTO, PullRequestFileDTO } from "./pull-request.dto";
 import { 
     mapCreatePullRequestParams,
     mapMergePullRequestParams,
@@ -18,9 +18,9 @@ import {
     mapPullRequestFiles, 
     mapPullRequests, 
     mapUpdatePullRequestParams,
-} from "../mappers/pullrequest.mapper";
-import { mapCommits } from "../mappers/commit.mapper";
-import { assertConfig } from "../utils/config.utils";
+} from "./pull-request.mapper";
+import { mapCommits } from "../commits/commit.mapper";
+import { assertConfig } from "../../shared/utils/config.utils";
 
 export class PullRequestService {
     private readonly path: string;

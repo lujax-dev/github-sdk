@@ -1,6 +1,7 @@
-import { GithubClient } from "../client/GithubClient";
-import { User, UserDTO, UpdateUserParams } from "../types/user.types";
-import { mapUpdateUserParams, mapUser, mapUsers } from "../mappers/user.mapper";
+import { GithubClient } from "../../client/GithubClient";
+import { User, UpdateUserParams } from "./user.types";
+import { UserDTO } from "./user.dto";
+import { mapUpdateUserParams, mapUser, mapUsers } from "./user.mapper";
 
 export class UserService {
     private readonly path: string;
