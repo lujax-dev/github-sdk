@@ -4,6 +4,6 @@ export class GithubSdkError extends Error {
     constructor(message: string, exitCode: number = 1) {
         super(`github-sdk: ${message}`);
         this.exitCode = exitCode;
-        this.name = 'GithubSDKError';
+        this.name = "GithubSDKError";
     }
-} 
+}

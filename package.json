@@ -1,26 +1,29 @@
 {
-  "name": "github-sdk",
-  "version": "1.0.0",
-  "description": "An easy to use JS/TS SDK for interacting with the GitHub API",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "type": "module",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "tsc",
-    "prepublishOnly": "npm run build"
-  },
-  "keywords": [
-    "github",
-    "github-sdk",
-    "sdk",
-    "typescript"
-  ],
-  "license": "ISC",
-  "devDependencies": {
-    "@types/node": "^25.5.2",
-    "typescript": "^6.0.2"
-  }
+    "name": "github-sdk",
+    "version": "1.0.0",
+    "description": "An easy to use JS/TS SDK for interacting with the GitHub API",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "type": "module",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsc",
+        "prepublishOnly": "npm run build",
+        "format": "prettier . --write",
+        "format:check": "prettier . --check"
+    },
+    "keywords": [
+        "github",
+        "github-sdk",
+        "sdk",
+        "typescript"
+    ],
+    "license": "ISC",
+    "devDependencies": {
+        "@types/node": "^25.5.2",
+        "prettier": "^3.8.3",
+        "typescript": "^6.0.2"
+    }
 }

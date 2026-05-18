@@ -5,16 +5,16 @@ export interface Commit {
     nodeId: string;
     message: string;
     author: {
-      name: string;
-      email: string;
-      date: Date;
-      user: User | null;
+        name: string;
+        email: string;
+        date: Date;
+        user: User | null;
     };
     committer: {
-      name: string;
-      email: string;
-      date: Date;
-      user: User | null;
+        name: string;
+        email: string;
+        date: Date;
+        user: User | null;
     };
     url: string;
     commentCount: number;
