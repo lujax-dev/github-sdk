@@ -26,11 +26,11 @@ export class GithubClient {
      *  
      * @example
      * ```ts
-     * import { GithubClient } from "github-sdk";
+     * import { GithubClient } from "@lujax/github-sdk";
      * 
      * const github = new GithubClient({
      *     token: process.env.GITHUB_TOKEN,
-     *     owner: 'LewieJ08',
+     *     owner: 'lujax-dev',
      *     repo: 'github-sdk'
      * });
      * ```
