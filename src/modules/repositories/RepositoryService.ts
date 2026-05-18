@@ -1,5 +1,6 @@
 import { GithubClient } from "../../client/GithubClient";
 import { 
+    mapCreateRepositoryFromTemplateParams,
     mapCreateRepositoryParams,
     mapImmutableReleasesStatus,
     mapRepositories, 
@@ -7,6 +8,7 @@ import {
     mapRepositoryActivities, 
     mapRepositoryTags, 
     mapTeams, 
+    mapTransferRepositoryParams, 
     mapUpdateRepositoryParams 
 } from "./repository.mapper";
 import { mapContributers} from "../users/user.mapper";
@@ -23,6 +25,9 @@ import {
     Status,
     RepositoryTag,
     Team,
+    RepositoryTopicsResponse,
+    TransferRepositoryParams,
+    CreateRepositoryFromTemplateParams,
 } from "./repository.types";
 import { 
     RepositoryDTO,
@@ -38,10 +43,12 @@ import { assertConfig } from "../../shared/utils/config.utils";
 export class RepositoryService {
     private readonly path: string;
     private readonly orgPath: string;
+    private readonly authPath: string;
 
     constructor(private readonly client: GithubClient) { 
         this.path = `/repos/${client.config.owner}/${client.config.repo}`;
         this.orgPath = `/orgs/${client.config.org}/repos`;
+        this.authPath = '/user/repos';
     }
 
     /**
@@ -270,7 +277,7 @@ export class RepositoryService {
      * 
      * @example 
      * ```ts
-     * const immutableReleasesStatus = github.repositories.getImmutableReleasesStatus();
+     * const immutableReleasesStatus = await github.repositories.getImmutableReleasesStatus();
      * ```
      */
     public async getImmutableReleasesStatus(): Promise<ImmutableReleasesStatus> {
@@ -322,7 +329,7 @@ export class RepositoryService {
      * 
      * @example 
      * ```ts
-     * const languages = github.repositories.listLanguages();
+     * const languages = await github.repositories.listLanguages();
      * ```
      */
     public async listLanguages(): Promise<RepositoryLanguages> {
@@ -407,12 +414,221 @@ export class RepositoryService {
      * 
      * @example
      * ```ts
-     * const teams = github.repositories.listTeams();
+     * const teams = await github.repositories.listTeams();
      * ```
      */
     public async listTeams(): Promise<Team[]> {
         assertConfig(this.client, ['owner', 'repo']);
         const response = await this.client.request<TeamDTO[]>(`${this.path}/teams`);
         return mapTeams(response.data);
+    }
+
+    /**
+     * Get all topics of the configured repository
+     * 
+     * @returns Array of topics
+     * 
+     * @example
+     * ```ts
+     * const topics = await github.repositories.
+     * ```
+     */
+    public async getTopics(): Promise<string[]> {
+        assertConfig(this.client, ['owner', 'repo']);
+        const response = await this.client.request<RepositoryTopicsResponse>(`${this.path}/topics`);
+        return response.data.names;
+    }
+
+    /**
+     * Replace all topics of the configured repository
+     * 
+     * @param topics An array of topics to add to the repository.
+     * An empty array will clear all topics
+     * @returns Array of new topics 
+     * 
+     * @example
+     * ```ts
+     * github.repositories.replaceTopics(['api', 'github']);
+     * ```
+     */
+    public async replaceTopics(topics: string[]): Promise<string[]> {
+        assertConfig(this.client, ['owner', 'repo']);
+        const response = await this.client.request<RepositoryTopicsResponse>(`${this.path}/topics`, {
+            method: 'PUT',
+            body: JSON.stringify({ names: topics })
+        });
+        return response.data.names;
+    }
+
+    /**
+     * Transfer the configured repository to a new owner
+     * 
+     * @param params Repository transfer options
+     * @returns Data of the transfered repository
+     * 
+     * @example 
+     * ```ts
+     * github.repositories.transfer({
+     *     newOwner: 'Bob123'
+     * });
+     * ```
+     */
+    public async transfer(params: TransferRepositoryParams): Promise<Repository> {
+        assertConfig(this.client, ['owner', 'repo']);
+        const body = mapTransferRepositoryParams(params);
+        const response = await this.client.request<RepositoryDTO>(`${this.path}/transfer`, {
+            method: 'POST',
+            body: JSON.stringify(body)
+        });
+        return mapRepository(response.data);
+    }
+
+    /**
+     * Check if vulnerability alerts are enabled for the configured repository
+     * 
+     * @returns Boolean value that determines if vulnerability alerts are enabled
+     * 
+     * @example 
+     * ```ts
+     * const vulnerabilityAlerts = await github.repositories.getVulnerabilityAlertsStatus();
+     * ```
+     */
+    public async getVulnerabilityAlertsStatus(): Promise<boolean> {
+        assertConfig(this.client, ['owner', 'repo']);
+        const response = await this.client.request<null>(`${this.path}/vulnerability-alerts`);
+        return response.status === 204;
+    }
+
+    /**
+     * Enable vulnerability alerts for the configured repository
+     * 
+     * @returns Boolean value that determines if vulnerability alerts were enabled
+     * 
+     * @example 
+     * ```ts
+     * github.repositories.enableVulnerabilityAlerts();
+     * ```
+     */
+    public async enableVulnerabilityAlerts() {
+        assertConfig(this.client, ['owner', 'repo']);
+        const response = await this.client.request<null>(`${this.path}/vulnerability-alerts`, {
+            method: 'PUT'
+        });
+        return response.status === 204;
+    }
+
+    /**
+     * Disable vulnerability alerts for the configured repository
+     * 
+     * @returns Boolean that determines if vulnerability alerts were disabled
+     * 
+     * @example
+     * ```ts
+     * github.repositories.disableVulnerbilityAlerts();
+     * ```
+     */
+    public async disableVulnerbilityAlerts(): Promise<boolean> {
+        assertConfig(this.client, ['owner', 'repo']);
+        const response = await this.client.request(`${this.path}/vulnerability-alerts`, {
+            method: 'DELETE'
+        });
+        return response.status === 204;
+    }
+
+    /**
+     * Create a repository using a template
+     * 
+     * @param params Configuration for the new repository
+     * @returns Data of the new repository
+     * 
+     * @example
+     * ```ts
+     * github.repositories.createFromTemplate({
+     *     templateOwner: TEMPLATE_OWNER,
+     *     templateRepo: TEMPLATE_REPO,
+     *     owner: 'lujax-dev',
+     *     options: {
+     *         name: 'new-repo',
+     *         description: 'new repo using template'
+     *     }
+     * })
+     * ```
+     */
+    public async createFromTemplate(params: CreateRepositoryFromTemplateParams): Promise<Repository> {
+        const body = mapCreateRepositoryFromTemplateParams(params);
+        const response = await this.client.request<RepositoryDTO>(`/repos/${params.templateOwner}/${params.templateRepo}/generate`, {
+            method: 'POST',
+            body: JSON.stringify(body)
+        });
+        return mapRepository(response.data);
+    }
+    
+    /**
+     * Lists all public repositories in the order that they were created
+     * 
+     * @returns Array of public repositories
+     * 
+     * @example
+     * ```ts
+     * const repositories = await github.repositories.listPublic();
+     * ```
+     */
+    public async listPublic(): Promise<Repository[]> {
+        const response = await this.client.request<RepositoryDTO[]>('/repositories');
+        return mapRepositories(response.data);
+    } 
+
+    /**
+     * List repositories for the authenticated user 
+     * 
+     * @returns List of users repositories
+     * 
+     * @example
+     * ```ts
+     * const repos = await github.repositories.list();
+     * ```
+     */
+    public async list(): Promise<Repository[]> {
+        const repsonse = await this.client.request<RepositoryDTO[]>(this.authPath);
+        return mapRepositories(repsonse.data);
+    }
+
+    /**
+     * Create a repository for the authenticated user
+     * 
+     * @param params Configuration for the new repository
+     * @returns Data of created repository
+     * 
+     * @example
+     * ```ts
+     * github.repositories.create({
+     *     name: 'new-repo',
+     *     description: 'this repo is cool'
+     * });
+     * ```
+     */
+    public async create(params: CreateRepositoryParams): Promise<Repository> {
+        const body = mapCreateRepositoryParams(params);
+        const response = await this.client.request<RepositoryDTO>(this.authPath, {
+            method: 'POST',
+            body: JSON.stringify(body)
+        });
+        return mapRepository(response.data);
+    }
+    
+    /**
+     * List repositories for a user by their username
+     * 
+     * @param username 
+     * @returns Array of repositories
+     * 
+     * @example
+     * ```ts
+     * const repos = await github.repositories.listForUser('LewieJ08');
+     * ```
+     */
+    public async listByUsername(username: string): Promise<Repository> {
+        const response = await this.client.request<RepositoryDTO>(`/users/${username}/repos`);
+        return mapRepository(response.data);
     }
 }
