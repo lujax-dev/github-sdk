@@ -204,3 +204,35 @@ export interface UpdateRepositoryPayload extends Omit<CreateRepositoryPayload, '
     archived?: boolean;
     allow_forking?: boolean;
 }
+
+export interface TransferRepositoryParams {
+    newOwner: string;
+    newName?: string;
+    teamsIds?: number[];
+}
+
+export interface TransferRepositoryPayload {
+    new_owner: string;
+    new_name?: string;
+    team_ids?: number[];
+}
+
+export interface CreateRepositoryFromTemplateParams {
+    templateOwner: string;
+    templateRepo: string;
+    owner?: string;
+    options: {
+        name: string;
+        description?: string;
+        includeAllBranches?: boolean;
+        private?: boolean;
+    }
+}
+
+export interface CreateRepositoryFromTemplatePayload {
+    name: string
+    owner?: string; 
+    description?: string;
+    include_all_branches?: boolean;
+    private?: boolean;
+}
