@@ -1,26 +1,26 @@
-import { 
-    PullRequest, 
-    BranchRef, 
+import {
+    PullRequest,
+    BranchRef,
     PullRequestFile,
     CreatePullRequestParams,
     CreatePullRequestPayload,
     UpdatePullRequestParams,
     UpdatePullRequestPayload,
     MergePullRequestParams,
-    MergePullRequestPayload
-} from "./pull-request.types"
-import { 
-    BranchRefDTO, 
-    PullRequestDTO, 
-    PullRequestFileDTO 
-} from "./pull-request.dto"
-import { mapUser } from "../users/user.mapper"
+    MergePullRequestPayload,
+} from "./pull-request.types";
+import {
+    BranchRefDTO,
+    PullRequestDTO,
+    PullRequestFileDTO,
+} from "./pull-request.dto";
+import { mapUser } from "../users/user.mapper";
 
 export function mapBranchRef(dto: BranchRefDTO): BranchRef {
     return {
         ref: dto.ref,
-        sha: dto.sha
-    }
+        sha: dto.sha,
+    };
 }
 
 export function mapPullRequest(dto: PullRequestDTO): PullRequest {
@@ -36,8 +36,8 @@ export function mapPullRequest(dto: PullRequestDTO): PullRequest {
         user: mapUser(dto.user),
         url: dto.html_url,
         apiUrl: dto.url,
-        comments:dto.comments,
-        commits:dto.commits,
+        comments: dto.comments,
+        commits: dto.commits,
         additions: dto.additions,
         deletions: dto.deletions,
         changedFiles: dto.changed_files,
@@ -47,15 +47,15 @@ export function mapPullRequest(dto: PullRequestDTO): PullRequest {
         mergedAt: dto.merged_at,
         isMerged: dto.merged,
         head: mapBranchRef(dto.head),
-        base: mapBranchRef(dto.base)
-    }   
+        base: mapBranchRef(dto.base),
+    };
 }
 
 export function mapPullRequests(dtos: PullRequestDTO[]): PullRequest[] {
-    return dtos.map(dto => mapPullRequest(dto))
+    return dtos.map((dto) => mapPullRequest(dto));
 }
 
-export function mapPullRequestFile(dto: PullRequestFileDTO): PullRequestFile{
+export function mapPullRequestFile(dto: PullRequestFileDTO): PullRequestFile {
     return {
         sha: dto.sha,
         name: dto.filename,
@@ -65,15 +65,19 @@ export function mapPullRequestFile(dto: PullRequestFileDTO): PullRequestFile{
         changes: dto.changes,
         blobUrl: dto.blob_url,
         rawUrl: dto.raw_url,
-        patch: dto.patch
-    }
+        patch: dto.patch,
+    };
 }
 
-export function mapPullRequestFiles(dtos: PullRequestFileDTO[]): PullRequestFile[] {
-    return dtos.map(dto => mapPullRequestFile(dto))
+export function mapPullRequestFiles(
+    dtos: PullRequestFileDTO[],
+): PullRequestFile[] {
+    return dtos.map((dto) => mapPullRequestFile(dto));
 }
 
-export function mapCreatePullRequestParams(params: CreatePullRequestParams): CreatePullRequestPayload {
+export function mapCreatePullRequestParams(
+    params: CreatePullRequestParams,
+): CreatePullRequestPayload {
     return {
         head: params.head,
         base: params.base,
@@ -82,11 +86,13 @@ export function mapCreatePullRequestParams(params: CreatePullRequestParams): Cre
         body: params.body,
         maintainer_can_modify: params.maintainerCanModify,
         draft: params.draft,
-        issue: params.issue
-    }
+        issue: params.issue,
+    };
 }
 
-export function mapUpdatePullRequestParams(params: UpdatePullRequestParams): UpdatePullRequestPayload {
+export function mapUpdatePullRequestParams(
+    params: UpdatePullRequestParams,
+): UpdatePullRequestPayload {
     return {
         title: params.title,
         body: params.body,
@@ -96,7 +102,9 @@ export function mapUpdatePullRequestParams(params: UpdatePullRequestParams): Upd
     };
 }
 
-export function mapMergePullRequestParams(params: MergePullRequestParams): MergePullRequestPayload {
+export function mapMergePullRequestParams(
+    params: MergePullRequestParams,
+): MergePullRequestPayload {
     return {
         commit_title: params.commitTitle,
         commit_message: params.commitMessage,

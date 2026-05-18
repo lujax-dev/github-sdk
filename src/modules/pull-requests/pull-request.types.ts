@@ -1,6 +1,6 @@
 import { User } from "../users/user.types";
 
-export type PullRequestState = 'open' | 'closed';
+export type PullRequestState = "open" | "closed";
 export type PullRequestFileStatus =
     | "added"
     | "removed"
@@ -9,7 +9,7 @@ export type PullRequestFileStatus =
     | "copied"
     | "changed"
     | "unchanged";
-export type PullRequestMergeMethod = 'merge' | 'squash' | 'rebase'
+export type PullRequestMergeMethod = "merge" | "squash" | "rebase";
 
 export interface BranchRef {
     ref: string;
@@ -77,12 +77,12 @@ export interface CreatePullRequestPayload {
 }
 
 export interface UpdatePullRequestParams {
-    pullNumber: number,
-    title?: string,
-    body?: string,
-    state?: PullRequestState,
-    base?: string,
-    maintainerCanModify?: boolean
+    pullNumber: number;
+    title?: string;
+    body?: string;
+    state?: PullRequestState;
+    base?: string;
+    maintainerCanModify?: boolean;
 }
 
 export interface UpdatePullRequestPayload {

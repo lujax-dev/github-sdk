@@ -1,13 +1,10 @@
-import { 
-    UpdateUserParams, 
-    UpdateUserPayload, 
-    User,
-    Contributer
-} from "./user.types";
 import {
-    UserDTO,
-    ContributerDTO 
-} from "./user.dto";
+    UpdateUserParams,
+    UpdateUserPayload,
+    User,
+    Contributer,
+} from "./user.types";
+import { UserDTO, ContributerDTO } from "./user.dto";
 
 export function mapUser(dto: UserDTO): User {
     return {
@@ -31,11 +28,11 @@ export function mapUser(dto: UserDTO): User {
         following: dto.following,
         createdAt: dto.created_at,
         updatedAt: dto.updated_at,
-    }
+    };
 }
 
 export function mapUsers(dtos: UserDTO[]): User[] {
-    return dtos.map(dto => mapUser(dto));
+    return dtos.map((dto) => mapUser(dto));
 }
 
 export function mapContributer(dto: ContributerDTO): Contributer {
@@ -60,15 +57,17 @@ export function mapContributer(dto: ContributerDTO): Contributer {
         following: dto.following,
         createdAt: dto.created_at,
         updatedAt: dto.updated_at,
-        contributions: dto.contributions
-    }
+        contributions: dto.contributions,
+    };
 }
 
 export function mapContributers(dtos: ContributerDTO[]): Contributer[] {
-    return dtos.map(dto => mapContributer(dto));
+    return dtos.map((dto) => mapContributer(dto));
 }
 
-export function mapUpdateUserParams(params: UpdateUserParams): UpdateUserPayload {
+export function mapUpdateUserParams(
+    params: UpdateUserParams,
+): UpdateUserPayload {
     return {
         name: params.name,
         email: params.email,
@@ -77,6 +76,6 @@ export function mapUpdateUserParams(params: UpdateUserParams): UpdateUserPayload
         company: params.company,
         location: params.location,
         hireable: params.hireable,
-        bio: params.bio
-    }
+        bio: params.bio,
+    };
 }

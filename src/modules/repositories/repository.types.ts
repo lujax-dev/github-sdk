@@ -10,7 +10,6 @@ export type RepositoryActivityType =
     | "prMerge"
     | "mergeQueueMerge";
 
-
 export interface Repository {
     id: number;
     nodeId: string;
@@ -137,8 +136,8 @@ export interface Team {
     parent: TeamParent | null;
 }
 
-export interface RepositoryTopicsResponse{
-    names: string[]
+export interface RepositoryTopicsResponse {
+    names: string[];
 }
 
 export interface CreateRepositoryParams {
@@ -146,7 +145,7 @@ export interface CreateRepositoryParams {
     description?: string;
     homepage?: string;
     privateRepo: boolean;
-    visibility?: 'public' | 'private';
+    visibility?: "public" | "private";
     hasIssues?: boolean;
     hasProjects?: boolean;
     hasWiki?: boolean;
@@ -161,10 +160,10 @@ export interface CreateRepositoryParams {
     allowRebaseMerge?: boolean;
     allowAutoMerge?: boolean;
     deleteBranchOnMerge?: boolean;
-    squashMergeCommitTitle?: 'PR_TITLE' | 'COMMIT_OR_PR_TITLE';
-    squashMergeCommitMessage?: 'PR_BODY' | 'COMMIT_MESSAGES' | 'BLANK';
-    mergeCommitTitle?: 'PR_TITLE' | 'COMMIT_OR_PR_TITLE';
-    mergeCommitMessage?: 'PR_BODY' | 'COMMIT_MESSAGES' | 'BLANK';
+    squashMergeCommitTitle?: "PR_TITLE" | "COMMIT_OR_PR_TITLE";
+    squashMergeCommitMessage?: "PR_BODY" | "COMMIT_MESSAGES" | "BLANK";
+    mergeCommitTitle?: "PR_TITLE" | "COMMIT_OR_PR_TITLE";
+    mergeCommitMessage?: "PR_BODY" | "COMMIT_MESSAGES" | "BLANK";
 }
 
 export interface CreateRepositoryPayload {
@@ -172,7 +171,7 @@ export interface CreateRepositoryPayload {
     description?: string;
     homepage?: string;
     private: boolean;
-    visibility?: 'public' | 'private';
+    visibility?: "public" | "private";
     has_issues?: boolean;
     has_projects?: boolean;
     has_wiki?: boolean;
@@ -187,19 +186,25 @@ export interface CreateRepositoryPayload {
     allow_rebase_merge?: boolean;
     allow_auto_merge?: boolean;
     delete_branch_on_merge?: boolean;
-    squash_merge_commit_title?: 'PR_TITLE' | 'COMMIT_OR_PR_TITLE';
-    squash_merge_commit_message?: 'PR_BODY' | 'COMMIT_MESSAGES' | 'BLANK';
-    merge_commit_title?: 'PR_TITLE' | 'COMMIT_OR_PR_TITLE';
-    merge_commit_message?: 'PR_BODY' | 'COMMIT_MESSAGES' | 'BLANK';
+    squash_merge_commit_title?: "PR_TITLE" | "COMMIT_OR_PR_TITLE";
+    squash_merge_commit_message?: "PR_BODY" | "COMMIT_MESSAGES" | "BLANK";
+    merge_commit_title?: "PR_TITLE" | "COMMIT_OR_PR_TITLE";
+    merge_commit_message?: "PR_BODY" | "COMMIT_MESSAGES" | "BLANK";
 }
 
-export interface UpdateRepositoryParams extends Omit<CreateRepositoryParams, 'teamId'> {
+export interface UpdateRepositoryParams extends Omit<
+    CreateRepositoryParams,
+    "teamId"
+> {
     defaultBranch?: string;
     archived?: boolean;
     allowForking?: boolean;
 }
 
-export interface UpdateRepositoryPayload extends Omit<CreateRepositoryPayload, 'team_id'> {
+export interface UpdateRepositoryPayload extends Omit<
+    CreateRepositoryPayload,
+    "team_id"
+> {
     default_branch?: string;
     archived?: boolean;
     allow_forking?: boolean;
@@ -226,12 +231,12 @@ export interface CreateRepositoryFromTemplateParams {
         description?: string;
         includeAllBranches?: boolean;
         private?: boolean;
-    }
+    };
 }
 
 export interface CreateRepositoryFromTemplatePayload {
-    name: string
-    owner?: string; 
+    name: string;
+    owner?: string;
     description?: string;
     include_all_branches?: boolean;
     private?: boolean;

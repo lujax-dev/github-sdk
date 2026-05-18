@@ -41,9 +41,9 @@ export interface RepositoryActivityDTO {
     before: string;
     after: string;
     ref: string;
-    timestamp: string; 
+    timestamp: string;
     activity_type: RepositoryActivityTypeDTO;
-    actor: UserDTO| null;
+    actor: UserDTO | null;
 }
 
 export interface ImmutableReleasesStatusDTO extends Status {

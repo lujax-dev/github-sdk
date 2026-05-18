@@ -3,11 +3,11 @@ import { MissingConfigError } from "../errors/MissingConfigError";
 
 export function assertConfig<K extends keyof GithubClientConfig>(
     client: GithubClient,
-    keys: K[]
+    keys: K[],
 ): void {
     for (const key of keys) {
         if (!client.config[key]) {
-            throw new MissingConfigError(keys)
+            throw new MissingConfigError(keys);
         }
-    }    
+    }
 }

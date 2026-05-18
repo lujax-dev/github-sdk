@@ -1,10 +1,10 @@
-import { 
+import {
     Repository,
-    CreateRepositoryParams, 
-    CreateRepositoryPayload, 
-    UpdateRepositoryParams, 
-    UpdateRepositoryPayload, 
-    RepositoryActivity, 
+    CreateRepositoryParams,
+    CreateRepositoryPayload,
+    UpdateRepositoryParams,
+    UpdateRepositoryPayload,
+    RepositoryActivity,
     RepositoryActivityType,
     ImmutableReleasesStatus,
     RepositoryTag,
@@ -14,9 +14,9 @@ import {
     TransferRepositoryParams,
     TransferRepositoryPayload,
     CreateRepositoryFromTemplateParams,
-    CreateRepositoryFromTemplatePayload
+    CreateRepositoryFromTemplatePayload,
 } from "./repository.types";
-import { 
+import {
     RepositoryDTO,
     RepositoryActivityTypeDTO,
     RepositoryActivityDTO,
@@ -24,7 +24,7 @@ import {
     RepositoryTagDTO,
     TeamPermissionsDTO,
     TeamParentDTO,
-    TeamDTO
+    TeamDTO,
 } from "./repository.dto";
 import { mapUser } from "../users/user.mapper";
 
@@ -51,15 +51,17 @@ export function mapRepository(dto: RepositoryDTO): Repository {
         pushedAt: dto.pushed_at,
         size: dto.size,
         topics: dto.topics,
-        visibility: dto.visibility
-    }
+        visibility: dto.visibility,
+    };
 }
 
 export function mapRepositories(dtos: RepositoryDTO[]): Repository[] {
-    return dtos.map(dto => mapRepository(dto));
+    return dtos.map((dto) => mapRepository(dto));
 }
 
-export function mapActivityType(dto: RepositoryActivityTypeDTO): RepositoryActivityType  {
+export function mapActivityType(
+    dto: RepositoryActivityTypeDTO,
+): RepositoryActivityType {
     switch (dto) {
         case "push":
             return "push";
@@ -76,7 +78,9 @@ export function mapActivityType(dto: RepositoryActivityTypeDTO): RepositoryActiv
     }
 }
 
-export function mapRepositoryActivity(dto: RepositoryActivityDTO): RepositoryActivity {
+export function mapRepositoryActivity(
+    dto: RepositoryActivityDTO,
+): RepositoryActivity {
     return {
         id: dto.id,
         nodeId: dto.node_id,
@@ -86,18 +90,22 @@ export function mapRepositoryActivity(dto: RepositoryActivityDTO): RepositoryAct
         timestamp: new Date(dto.timestamp),
         activityType: mapActivityType(dto.activity_type),
         actor: dto.actor ? mapUser(dto.actor) : null,
-    }
+    };
 }
 
-export function mapRepositoryActivities(dtos: RepositoryActivityDTO[]): RepositoryActivity[] {
-    return dtos.map(dto => mapRepositoryActivity(dto));
+export function mapRepositoryActivities(
+    dtos: RepositoryActivityDTO[],
+): RepositoryActivity[] {
+    return dtos.map((dto) => mapRepositoryActivity(dto));
 }
 
-export function mapImmutableReleasesStatus(dto: ImmutableReleasesStatusDTO): ImmutableReleasesStatus {
+export function mapImmutableReleasesStatus(
+    dto: ImmutableReleasesStatusDTO,
+): ImmutableReleasesStatus {
     return {
         enabled: dto.enabled,
-        enforcedByOwner: dto.enforced_by_owner
-    }
+        enforcedByOwner: dto.enforced_by_owner,
+    };
 }
 
 export function mapRepositoryTag(dto: RepositoryTagDTO): RepositoryTag {
@@ -106,12 +114,12 @@ export function mapRepositoryTag(dto: RepositoryTagDTO): RepositoryTag {
         nodeId: dto.node_id,
         zipballUrl: dto.zipball_url,
         tarballUrl: dto.tarball_url,
-        commit: dto.commit
-    }
+        commit: dto.commit,
+    };
 }
 
 export function mapRepositoryTags(dtos: RepositoryTagDTO[]): RepositoryTag[] {
-    return dtos.map(dto => mapRepositoryTag(dto));
+    return dtos.map((dto) => mapRepositoryTag(dto));
 }
 
 export function mapTeamPermissions(dto: TeamPermissionsDTO): TeamPermissions {
@@ -156,8 +164,8 @@ export function mapTeam(dto: TeamDTO): Team {
         notificationSetting: dto.notification_setting,
         permission: dto.permission,
         permissions: dto.permissions
-        ? mapTeamPermissions(dto.permissions)
-        : undefined,
+            ? mapTeamPermissions(dto.permissions)
+            : undefined,
         url: dto.url,
         htmlUrl: dto.html_url,
         membersUrl: dto.members_url,
@@ -165,17 +173,17 @@ export function mapTeam(dto: TeamDTO): Team {
         type: dto.type,
         organizationId: dto.organization_id,
         enterpriseId: dto.enterprise_id,
-        parent: dto.parent
-        ? mapTeamParent(dto.parent)
-        : null,
+        parent: dto.parent ? mapTeamParent(dto.parent) : null,
     };
 }
 
-export function mapTeams(dtos: TeamDTO[],): Team[] {
-    return dtos.map(dto => mapTeam(dto));
+export function mapTeams(dtos: TeamDTO[]): Team[] {
+    return dtos.map((dto) => mapTeam(dto));
 }
 
-export function mapCreateRepositoryParams(params: CreateRepositoryParams): CreateRepositoryPayload {
+export function mapCreateRepositoryParams(
+    params: CreateRepositoryParams,
+): CreateRepositoryPayload {
     return {
         name: params.name,
         description: params.description,
@@ -200,10 +208,12 @@ export function mapCreateRepositoryParams(params: CreateRepositoryParams): Creat
         squash_merge_commit_message: params.squashMergeCommitMessage,
         merge_commit_title: params.mergeCommitTitle,
         merge_commit_message: params.mergeCommitMessage,
-    }
+    };
 }
 
-export function mapUpdateRepositoryParams(params: UpdateRepositoryParams): UpdateRepositoryPayload {
+export function mapUpdateRepositoryParams(
+    params: UpdateRepositoryParams,
+): UpdateRepositoryPayload {
     return {
         name: params.name,
         description: params.description,
@@ -230,23 +240,27 @@ export function mapUpdateRepositoryParams(params: UpdateRepositoryParams): Updat
         default_branch: params.defaultBranch,
         archived: params.archived,
         allow_forking: params.allowForking,
-    }
+    };
 }
 
-export function mapTransferRepositoryParams(params: TransferRepositoryParams): TransferRepositoryPayload {
+export function mapTransferRepositoryParams(
+    params: TransferRepositoryParams,
+): TransferRepositoryPayload {
     return {
         new_owner: params.newOwner,
         new_name: params.newName,
-        team_ids: params.teamsIds
-    }
+        team_ids: params.teamsIds,
+    };
 }
 
-export function mapCreateRepositoryFromTemplateParams(params: CreateRepositoryFromTemplateParams): CreateRepositoryFromTemplatePayload {
+export function mapCreateRepositoryFromTemplateParams(
+    params: CreateRepositoryFromTemplateParams,
+): CreateRepositoryFromTemplatePayload {
     return {
         name: params.options.name,
         owner: params.owner,
         description: params.options.description,
         include_all_branches: params.options.includeAllBranches,
-        private: params.options.private 
-    }
+        private: params.options.private,
+    };
 }

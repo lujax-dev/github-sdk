@@ -2,9 +2,9 @@ import { PullRequestFileStatus, PullRequestState } from "./pull-request.types";
 import { UserDTO } from "../users/user.dto";
 
 export interface BranchRefDTO {
-    ref : string;
+    ref: string;
     sha: string;
-} 
+}
 
 export interface PullRequestDTO {
     id: number;
@@ -44,5 +44,3 @@ export interface PullRequestFileDTO {
     contents_url: string;
     patch: string | null;
 }
-
-
