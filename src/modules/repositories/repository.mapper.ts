@@ -10,7 +10,11 @@ import {
     RepositoryTag,
     Team,
     TeamParent,
-    TeamPermissions
+    TeamPermissions,
+    TransferRepositoryParams,
+    TransferRepositoryPayload,
+    CreateRepositoryFromTemplateParams,
+    CreateRepositoryFromTemplatePayload
 } from "./repository.types";
 import { 
     RepositoryDTO,
@@ -145,31 +149,22 @@ export function mapTeam(dto: TeamDTO): Team {
     return {
         id: dto.id,
         nodeId: dto.node_id,
-
         name: dto.name,
         slug: dto.slug,
-
         description: dto.description,
-
         privacy: dto.privacy,
         notificationSetting: dto.notification_setting,
-
         permission: dto.permission,
-
         permissions: dto.permissions
         ? mapTeamPermissions(dto.permissions)
         : undefined,
-
         url: dto.url,
         htmlUrl: dto.html_url,
         membersUrl: dto.members_url,
         repositoriesUrl: dto.repositories_url,
-
         type: dto.type,
-
         organizationId: dto.organization_id,
         enterpriseId: dto.enterprise_id,
-
         parent: dto.parent
         ? mapTeamParent(dto.parent)
         : null,
@@ -235,5 +230,23 @@ export function mapUpdateRepositoryParams(params: UpdateRepositoryParams): Updat
         default_branch: params.defaultBranch,
         archived: params.archived,
         allow_forking: params.allowForking,
+    }
+}
+
+export function mapTransferRepositoryParams(params: TransferRepositoryParams): TransferRepositoryPayload {
+    return {
+        new_owner: params.newOwner,
+        new_name: params.newName,
+        team_ids: params.teamsIds
+    }
+}
+
+export function mapCreateRepositoryFromTemplateParams(params: CreateRepositoryFromTemplateParams): CreateRepositoryFromTemplatePayload {
+    return {
+        name: params.options.name,
+        owner: params.owner,
+        description: params.options.description,
+        include_all_branches: params.options.includeAllBranches,
+        private: params.options.private 
     }
 }
