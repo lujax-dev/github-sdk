@@ -703,10 +703,10 @@ export class RepositoryService {
      * const repos = await github.repositories.listForUser('LewieJ08');
      * ```
      */
-    public async listByUsername(username: string): Promise<Repository> {
-        const response = await this.client.request<RepositoryDTO>(
+    public async listByUsername(username: string): Promise<Repository[]> {
+        const response = await this.client.request<RepositoryDTO[]>(
             `/users/${username}/repos`,
         );
-        return mapRepository(response.data);
+        return mapRepositories(response.data);
     }
 }

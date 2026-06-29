@@ -1,4 +1,5 @@
 import { GithubClient } from "../../client/GithubClient";
+import { GithubApiError } from "../../shared/errors/GithubApiError";
 import { Commit } from "../commits/commit.types";
 import { CommitDTO } from "../commits/commit.dto";
 import {
@@ -165,10 +166,17 @@ export class PullRequestService {
      * ```
      */
     public async isMerged(pullNumber: number): Promise<boolean> {
-        const response = await this.client.request<null>(
-            `${this.path}/${pullNumber}/merge`,
-        );
-        return response.status === 204;
+        try {
+            const response = await this.client.request<null>(
+                `${this.path}/${pullNumber}/merge`,
+            );
+            return response.status === 204;
+        } catch (error) {
+            if (error instanceof GithubApiError && error.status === 404) {
+                return false;
+            }
+            throw error;
+        }
     }
 
     /**
