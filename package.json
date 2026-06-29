@@ -1,10 +1,9 @@
 {
-    "name": "github-sdk",
+    "name": "@lujax/github-sdk",
     "version": "1.0.0",
     "description": "An easy to use JS/TS SDK for interacting with the GitHub API",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
-    "type": "module",
     "files": [
         "dist"
     ],
@@ -12,7 +11,10 @@
         "build": "tsc",
         "prepublishOnly": "npm run build",
         "format": "prettier . --write",
-        "format:check": "prettier . --check"
+        "format:check": "prettier . --check",
+        "test": "jest",
+        "test:watch": "jest --watch",
+        "test:coverage": "jest --coverage"
     },
     "keywords": [
         "github",
@@ -20,10 +22,13 @@
         "sdk",
         "typescript"
     ],
-    "license": "ISC",
+    "license": "MIT",
     "devDependencies": {
+        "@types/jest": "^29.5.14",
         "@types/node": "^25.5.2",
+        "jest": "^29.7.0",
         "prettier": "^3.8.3",
+        "ts-jest": "^29.4.11",
         "typescript": "^6.0.2"
     }
 }
