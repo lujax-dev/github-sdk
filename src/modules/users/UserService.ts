@@ -45,7 +45,7 @@ export class UserService {
      */
     public async updateAuthenticated(params: UpdateUserParams): Promise<User> {
         const body = mapUpdateUserParams(params);
-        const response = await this.client.request<UserDTO>(this.path, {
+        const response = await this.client.request<UserDTO>(this.authPath, {
             method: "PATCH",
             body: JSON.stringify(body),
         });
@@ -81,7 +81,7 @@ export class UserService {
      * ```
      */
     public async list(): Promise<User[]> {
-        const response = await this.client.request<UserDTO[]>(this.authPath);
+        const response = await this.client.request<UserDTO[]>(this.path);
         return mapUsers(response.data);
     }
 
@@ -98,7 +98,7 @@ export class UserService {
      */
     public async getByUsername(username: string): Promise<User> {
         const response = await this.client.request<UserDTO>(
-            `${this.authPath}/${username}`,
+            `${this.path}/${username}`,
         );
         return mapUser(response.data);
     }
