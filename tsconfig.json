@@ -2,8 +2,6 @@
     "compilerOptions": {
         "target": "ES2022",
         "module": "commonjs",
-        "outDir": "./dist",
-        "rootDir": "./src",
         "declaration": true,
         "strict": true,
         "esModuleInterop": true,
@@ -13,8 +11,10 @@
         "noImplicitAny": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "sourceMap": true
+        "sourceMap": true,
+        "types": ["node", "jest"],
+        "noEmit": true
     },
-    "include": ["src/**/*"],
-    "exclude": ["node_modules", "dist", "tests"]
+    "include": ["src/**/*", "tests/**/*"],
+    "exclude": ["node_modules", "dist"]
 }
