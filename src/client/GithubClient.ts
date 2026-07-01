@@ -1,7 +1,11 @@
 import { PullRequestService } from "../modules/pull-requests/PullRequestService";
 import { RepositoryService } from "../modules/repositories/RepositoryService";
 import { UserService } from "../modules/users/UserService";
-import { ApiResponse, request } from "../shared/utils/request.utils";
+import {
+    ApiResponse,
+    createRequestClient,
+    RequestClient,
+} from "../shared/utils/request.utils";
 
 export interface GithubClientConfig {
     token: string;
@@ -20,6 +24,7 @@ export class GithubClient {
     public readonly users: UserService;
     public readonly repositories: RepositoryService;
     public readonly baseUrl: string;
+    private readonly requestClient: RequestClient;
 
     /**
      * @param config GithubClient configuration
@@ -36,10 +41,11 @@ export class GithubClient {
      * ```
      */
     constructor(public readonly config: GithubClientConfig) {
+        this.baseUrl = "https://api.github.com";
+        this.requestClient = createRequestClient(this.baseUrl, config.token);
         this.pullRequests = new PullRequestService(this);
         this.users = new UserService(this);
         this.repositories = new RepositoryService(this);
-        this.baseUrl = "https://api.github.com";
     }
 
     /**
@@ -58,6 +64,6 @@ export class GithubClient {
         path: string,
         options?: RequestInit,
     ): Promise<ApiResponse<T>> {
-        return request<T>(this.baseUrl, path, options, this.config.token);
+        return this.requestClient<T>(path, options);
     }
 }
