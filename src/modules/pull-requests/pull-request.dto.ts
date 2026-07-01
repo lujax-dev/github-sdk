@@ -1,4 +1,8 @@
-import { PullRequestFileStatus, PullRequestState } from "./pull-request.types";
+import {
+    PullRequestFileStatus,
+    PullRequestReviewState,
+    PullRequestState,
+} from "./pull-request.types";
 import { UserDTO } from "../users/user.dto";
 
 export interface BranchRefDTO {
@@ -43,4 +47,16 @@ export interface PullRequestFileDTO {
     raw_url: string;
     contents_url: string;
     patch: string | null;
+}
+
+export interface PullRequestReviewDTO {
+    id: number;
+    node_id: string;
+    user: UserDTO;
+    body: string;
+    state: PullRequestReviewState;
+    html_url: string;
+    pull_request_url: string;
+    submitted_at?: string;
+    commit_id: string;
 }

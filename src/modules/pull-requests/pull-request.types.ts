@@ -10,6 +10,8 @@ export type PullRequestFileStatus =
     | "changed"
     | "unchanged";
 export type PullRequestMergeMethod = "merge" | "squash" | "rebase";
+export type PullRequestReviewState =
+    "APPROVED" | "CHANGES_REQUESTED" | "COMMENTED" | "DISMISSED" | "PENDING";
 
 export interface BranchRef {
     ref: string;
@@ -117,4 +119,23 @@ export interface MergePullRequestResponse {
 export interface UpdatePullRequestBranchResponse {
     message: string;
     url: string;
+}
+
+export interface PullRequestReview {
+    id: number;
+    nodeId: string;
+    user: User;
+    body: string;
+    state: PullRequestReviewState;
+    url: string;
+    apiUrl: string;
+    submittedAt: string | null;
+    commitId: string;
+}
+
+export interface PullRequestCycleTime {
+    openedAt: string;
+    mergedAt: string | null;
+    totalMs: number | null;
+    totalHours: number | null;
 }
