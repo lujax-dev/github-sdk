@@ -10,13 +10,20 @@ import {
     UpdatePullRequestParams,
     MergePullRequestResponse,
     UpdatePullRequestBranchResponse,
+    PullRequestReview,
+    PullRequestCycleTime,
 } from "./pull-request.types";
-import { PullRequestDTO, PullRequestFileDTO } from "./pull-request.dto";
+import {
+    PullRequestDTO,
+    PullRequestFileDTO,
+    PullRequestReviewDTO,
+} from "./pull-request.dto";
 import {
     mapCreatePullRequestParams,
     mapMergePullRequestParams,
     mapPullRequest,
     mapPullRequestFiles,
+    mapPullRequestReviews,
     mapPullRequests,
     mapUpdatePullRequestParams,
 } from "./pull-request.mapper";
@@ -236,5 +243,51 @@ export class PullRequestService {
                 },
             );
         return response.data;
+    }
+
+    /**
+     * List reviews on a pull request
+     *
+     * @param pullNumber The number that identifies the pull request
+     * @returns Array of pull request reviews
+     *
+     * @example
+     * ```ts
+     * const reviews = await github.pullRequests.reviews(8);
+     * ```
+     */
+    public async reviews(pullNumber: number): Promise<PullRequestReview[]> {
+        const response = await this.client.request<PullRequestReviewDTO[]>(
+            `${this.path}/${pullNumber}/reviews`,
+        );
+        return mapPullRequestReviews(response.data);
+    }
+
+    /**
+     * Get the cycle time of a pull request — the duration from when it was
+     * opened to when it was merged
+     *
+     * @param pullNumber The number that identifies the pull request
+     * @returns Cycle time data. `mergedAt`, `totalMs`, and `totalHours` are
+     * `null` if the pull request has not been merged
+     *
+     * @example
+     * ```ts
+     * const cycleTime = await github.pullRequests.cycleTime(8);
+     * ```
+     */
+    public async cycleTime(pullNumber: number): Promise<PullRequestCycleTime> {
+        const pullRequest = await this.get(pullNumber);
+        const totalMs = pullRequest.mergedAt
+            ? new Date(pullRequest.mergedAt).getTime() -
+              new Date(pullRequest.createdAt).getTime()
+            : null;
+
+        return {
+            openedAt: pullRequest.createdAt,
+            mergedAt: pullRequest.mergedAt,
+            totalMs,
+            totalHours: totalMs !== null ? totalMs / (1000 * 60 * 60) : null,
+        };
     }
 }

@@ -8,11 +8,13 @@ import {
     UpdatePullRequestPayload,
     MergePullRequestParams,
     MergePullRequestPayload,
+    PullRequestReview,
 } from "./pull-request.types";
 import {
     BranchRefDTO,
     PullRequestDTO,
     PullRequestFileDTO,
+    PullRequestReviewDTO,
 } from "./pull-request.dto";
 import { mapUser } from "../users/user.mapper";
 
@@ -100,6 +102,28 @@ export function mapUpdatePullRequestParams(
         base: params.base,
         maintainer_can_modify: params.maintainerCanModify,
     };
+}
+
+export function mapPullRequestReview(
+    dto: PullRequestReviewDTO,
+): PullRequestReview {
+    return {
+        id: dto.id,
+        nodeId: dto.node_id,
+        user: mapUser(dto.user),
+        body: dto.body,
+        state: dto.state,
+        url: dto.html_url,
+        apiUrl: dto.pull_request_url,
+        submittedAt: dto.submitted_at ?? null,
+        commitId: dto.commit_id,
+    };
+}
+
+export function mapPullRequestReviews(
+    dtos: PullRequestReviewDTO[],
+): PullRequestReview[] {
+    return dtos.map((dto) => mapPullRequestReview(dto));
 }
 
 export function mapMergePullRequestParams(
