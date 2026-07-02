@@ -3,6 +3,7 @@ export { GithubClient } from "./client/GithubClient";
 export * from "./modules/commits/commit.types";
 export * from "./modules/issues/issue.types";
 export * from "./modules/pull-requests/pull-request.types";
+export * from "./modules/releases/release.types";
 export * from "./modules/repositories/repository.types";
 export * from "./modules/users/user.types";
 
