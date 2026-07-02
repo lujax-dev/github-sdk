@@ -3,6 +3,7 @@ import { PullRequestService } from "../modules/pull-requests/PullRequestService"
 import { ReleaseService } from "../modules/releases/ReleaseService";
 import { RepositoryService } from "../modules/repositories/RepositoryService";
 import { UserService } from "../modules/users/UserService";
+import { WorkflowService } from "../modules/workflows/WorkflowService";
 import {
     ApiResponse,
     createRequestClient,
@@ -27,6 +28,7 @@ export class GithubClient {
     public readonly repositories: RepositoryService;
     public readonly issues: IssueService;
     public readonly releases: ReleaseService;
+    public readonly workflows: WorkflowService;
     public readonly baseUrl: string;
     private readonly requestClient: RequestClient;
 
@@ -52,6 +54,7 @@ export class GithubClient {
         this.repositories = new RepositoryService(this);
         this.issues = new IssueService(this);
         this.releases = new ReleaseService(this);
+        this.workflows = new WorkflowService(this);
     }
 
     /**
