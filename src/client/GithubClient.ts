@@ -1,3 +1,4 @@
+import { IssueService } from "../modules/issues/IssueService";
 import { PullRequestService } from "../modules/pull-requests/PullRequestService";
 import { RepositoryService } from "../modules/repositories/RepositoryService";
 import { UserService } from "../modules/users/UserService";
@@ -23,6 +24,7 @@ export class GithubClient {
     public readonly pullRequests: PullRequestService;
     public readonly users: UserService;
     public readonly repositories: RepositoryService;
+    public readonly issues: IssueService;
     public readonly baseUrl: string;
     private readonly requestClient: RequestClient;
 
@@ -46,6 +48,7 @@ export class GithubClient {
         this.pullRequests = new PullRequestService(this);
         this.users = new UserService(this);
         this.repositories = new RepositoryService(this);
+        this.issues = new IssueService(this);
     }
 
     /**
