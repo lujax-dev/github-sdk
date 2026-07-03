@@ -1,4 +1,9 @@
 export { GithubClient } from "./client/GithubClient";
+export type { GithubClientConfig } from "./client/GithubClient";
+
+export * from "./auth/GitHubAuth";
+export * from "./auth/PatAuth";
+export * from "./auth/GitHubAppAuth";
 
 export * from "./modules/commits/commit.types";
 export * from "./modules/issues/issue.types";

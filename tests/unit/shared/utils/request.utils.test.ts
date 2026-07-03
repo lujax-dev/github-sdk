@@ -236,6 +236,41 @@ describe("createRequestClient", () => {
         });
     });
 
+    describe("GitHubAuth strategies", () => {
+        it("resolves the token from a GitHubAuth on every request, supporting rotation", async () => {
+            const fetchMock = jest
+                .fn()
+                .mockResolvedValue(mockResponse(200, { ok: true }));
+            global.fetch = fetchMock;
+
+            let calls = 0;
+            const auth = {
+                getToken: jest.fn(async () => {
+                    calls++;
+                    return `token-${calls}`;
+                }),
+            };
+
+            const client = createRequestClient("https://api.github.com", auth);
+            await client("/first");
+            await client("/second");
+
+            expect(auth.getToken).toHaveBeenCalledTimes(2);
+            const firstHeaders = (
+                fetchMock.mock.calls[0][1] as {
+                    headers: Record<string, string>;
+                }
+            ).headers;
+            const secondHeaders = (
+                fetchMock.mock.calls[1][1] as {
+                    headers: Record<string, string>;
+                }
+            ).headers;
+            expect(firstHeaders.Authorization).toBe("Bearer token-1");
+            expect(secondHeaders.Authorization).toBe("Bearer token-2");
+        });
+    });
+
     describe("ETag caching", () => {
         it("sends If-None-Match on a repeat GET and returns cached data on 304", async () => {
             const fetchMock = jest
