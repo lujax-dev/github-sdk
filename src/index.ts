@@ -6,6 +6,7 @@ export * from "./modules/pull-requests/pull-request.types";
 export * from "./modules/releases/release.types";
 export * from "./modules/repositories/repository.types";
 export * from "./modules/users/user.types";
+export * from "./modules/workflows/workflow.types";
 
 export * from "./shared/errors/GithubSdkError";
 export * from "./shared/errors/GithubApiError";
