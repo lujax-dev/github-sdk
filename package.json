@@ -1,7 +1,7 @@
 {
     "name": "@lujax/github-sdk",
     "version": "1.0.0",
-    "description": "TypeScript-first GitHub REST API SDK - ergonomic, typed, zero dependencies",
+    "description": "TypeScript-first GitHub REST API SDK - ergonomic, typed, near-zero dependencies",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "files": [
@@ -30,5 +30,8 @@
         "prettier": "^3.8.3",
         "ts-jest": "^29.4.11",
         "typescript": "^6.0.2"
+    },
+    "dependencies": {
+        "jose": "^5.10.0"
     }
 }

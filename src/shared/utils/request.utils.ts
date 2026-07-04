@@ -1,3 +1,4 @@
+import { GitHubAuth } from "../../auth/GitHubAuth";
 import { GithubApiError } from "../errors/GithubApiError";
 
 interface GithubApiErrorResponse {
@@ -32,14 +33,21 @@ interface CacheEntry {
 }
 
 /**
- * Builds a `request<T>` function bound to a base URL and token. Rate-limit
- * state and the ETag cache are held in closure so each GithubClient instance
- * (and each token) gets its own isolated state.
+ * Builds a `request<T>` function bound to a base URL and an auth strategy.
+ * Rate-limit state and the ETag cache are held in closure so each
+ * GithubClient instance gets its own isolated state.
+ *
+ * `auth` accepts a plain token string (PAT, back-compat) or a
+ * {@link GitHubAuth} strategy — the token is resolved fresh on every
+ * request, so a rotating strategy like `GitHubAppAuth` stays valid without
+ * the caller needing to do anything.
  */
 export function createRequestClient(
     baseUrl: string,
-    token: string,
+    auth: string | GitHubAuth,
 ): RequestClient {
+    const resolveToken =
+        typeof auth === "string" ? async () => auth : () => auth.getToken();
     let rateLimitRemaining: number | null = null;
     let rateLimitResetAt: number | null = null;
     const etagCache = new Map<string, CacheEntry>();
@@ -75,6 +83,7 @@ export function createRequestClient(
         const url = `${baseUrl}${path}`;
         const isGet = (options.method ?? "GET").toUpperCase() === "GET";
         const cached = isGet ? etagCache.get(url) : undefined;
+        const token = await resolveToken();
 
         const headers: Record<string, string> = {
             "X-GitHub-Api-Version": "2022-11-28",

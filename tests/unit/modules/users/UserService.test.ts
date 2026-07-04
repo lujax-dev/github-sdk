@@ -68,7 +68,9 @@ describe("UserService", () => {
         it("returns mapped updated User", async () => {
             const { service, mockRequest } = makeService();
             mockRequest.mockResolvedValue({ data: mockUserDto, status: 200 });
-            const result = await service.updateAuthenticated({ name: "New Name" });
+            const result = await service.updateAuthenticated({
+                name: "New Name",
+            });
             expect(result.username).toBe("testuser");
         });
     });

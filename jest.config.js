@@ -7,6 +7,9 @@ module.exports = {
     collectCoverageFrom: ["src/**/*.ts"],
     passWithNoTests: true,
     transform: {
-        "^.+\\.tsx?$": ["ts-jest", { tsconfig: "<rootDir>/tsconfig.jest.json" }],
+        "^.+\\.tsx?$": [
+            "ts-jest",
+            { tsconfig: "<rootDir>/tsconfig.jest.json" },
+        ],
     },
 };
