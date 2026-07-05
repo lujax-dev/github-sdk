@@ -1,5 +1,6 @@
 import { GitHubAuth } from "../auth/GitHubAuth";
 import { IssueService } from "../modules/issues/IssueService";
+import { OrganizationService } from "../modules/organizations/OrganizationService";
 import { PullRequestService } from "../modules/pull-requests/PullRequestService";
 import { ReleaseService } from "../modules/releases/ReleaseService";
 import { RepositoryService } from "../modules/repositories/RepositoryService";
@@ -34,6 +35,7 @@ export class GithubClient {
     public readonly issues: IssueService;
     public readonly releases: ReleaseService;
     public readonly workflows: WorkflowService;
+    public readonly organizations: OrganizationService;
     public readonly baseUrl: string;
     private readonly requestClient: RequestClient;
 
@@ -79,6 +81,7 @@ export class GithubClient {
         this.issues = new IssueService(this);
         this.releases = new ReleaseService(this);
         this.workflows = new WorkflowService(this);
+        this.organizations = new OrganizationService(this);
     }
 
     /**
