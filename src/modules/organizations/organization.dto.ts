@@ -1,3 +1,5 @@
+import { UserDTO } from "../users/user.dto";
+
 export interface SimpleOrganizationDto {
     id: number;
     login: string;
@@ -23,4 +25,13 @@ export interface OrganizationDto extends SimpleOrganizationDto {
     created_at: string;
     updated_at: string;
     archived_at?: string | null;
+}
+
+export interface OrgMembershipDto {
+    url: string;
+    state: "active" | "pending";
+    role: "admin" | "member";
+    organization_url: string;
+    organization: SimpleOrganizationDto;
+    user: UserDTO;
 }
