@@ -22,6 +22,6 @@ export interface UserDTO {
     updated_at: string;
 }
 
-export interface ContributerDTO extends UserDTO {
+export interface ContributorDTO extends UserDTO {
     contributions: number;
 }

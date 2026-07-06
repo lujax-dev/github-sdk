@@ -21,7 +21,7 @@ export interface User {
     updatedAt: string;
 }
 
-export interface Contributer extends User {
+export interface Contributor extends User {
     contributions: number;
 }
 
