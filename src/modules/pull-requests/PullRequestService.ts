@@ -108,7 +108,7 @@ export class PullRequestService {
      *     pullNumber: 8,
      *     title: 'new title',
      *     body: 'updated body',
-     *     state: 'open'
+     *     state: 'open',
      *     base: 'main'
      * });
      * ```
@@ -225,7 +225,7 @@ export class PullRequestService {
      *
      * @example
      * ```ts
-     * github.pullRequests.updateBranch(8, 6dcb09b5b57875f334f61aebed695e2e4193db5e);
+     * github.pullRequests.updateBranch(8, '6dcb09b5b57875f334f61aebed695e2e4193db5e');
      * ```
      */
     public async updateBranch(

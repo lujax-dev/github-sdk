@@ -314,7 +314,7 @@ export class RepositoryService {
     }
 
     /**
-     * Enable immutable releases for the configured
+     * Enable immutable releases for the configured repository
      *
      * @returns Boolean value that determines if immutable releases were enabled
      *
@@ -335,7 +335,7 @@ export class RepositoryService {
     }
 
     /**
-     * Disable immutable releases for the configured
+     * Disable immutable releases for the configured repository
      *
      * @returns Boolean value that determines if immutable releases were disabled
      *
@@ -395,7 +395,7 @@ export class RepositoryService {
     /**
      * Enable private vulnerability reporting for the configured repository
      *
-     * @returns Boolean that determines if private vulnerability reporting
+     * @returns Boolean that determines if private vulnerability reporting was enabled
      *
      * @example
      * ```ts
@@ -416,7 +416,7 @@ export class RepositoryService {
     /**
      * Disable private vulnerability reporting for the configured repository
      *
-     * @returns Boolean that determines if private vulnerability reporting
+     * @returns Boolean that determines if private vulnerability reporting was disabled
      *
      * @example
      * ```ts
@@ -477,7 +477,7 @@ export class RepositoryService {
      *
      * @example
      * ```ts
-     * const topics = await github.repositories.
+     * const topics = await github.repositories.getTopics();
      * ```
      */
     public async getTopics(): Promise<string[]> {
@@ -568,7 +568,7 @@ export class RepositoryService {
      * github.repositories.enableVulnerabilityAlerts();
      * ```
      */
-    public async enableVulnerabilityAlerts() {
+    public async enableVulnerabilityAlerts(): Promise<boolean> {
         assertConfig(this.client, ["owner", "repo"]);
         const response = await this.client.request<null>(
             `${this.path}/vulnerability-alerts`,
@@ -695,12 +695,12 @@ export class RepositoryService {
     /**
      * List repositories for a user by their username
      *
-     * @param username
+     * @param username Username of the account to list repositories for
      * @returns Array of repositories
      *
      * @example
      * ```ts
-     * const repos = await github.repositories.listForUser('LewieJ08');
+     * const repos = await github.repositories.listByUsername('LewieJ08');
      * ```
      */
     public async listByUsername(username: string): Promise<Repository[]> {
