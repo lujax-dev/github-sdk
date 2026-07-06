@@ -86,7 +86,7 @@ Each service is scoped to the `owner`/`repo`/`org` set on the client and exposed
 
 There's no standalone commits service — list commits on a PR via `github.pullRequests.listCommits(pullNumber)`.
 
-Every public method has JSDoc with a runnable example — full signatures are in the source, e.g. [`PullRequestService.ts`](src/modules/pull-requests/PullRequestService.ts), [`RepositoryService.ts`](src/modules/repositories/RepositoryService.ts).
+Every public method has JSDoc with a runnable example — full signatures are in the source, e.g. [`PullRequestService.ts`](src/modules/pull-requests/PullRequestService.ts), [`RepositoryService.ts`](src/modules/repositories/RepositoryService.ts). For complete standalone scripts, see [`/examples`](examples).
 
 ## Error handling
 
@@ -120,6 +120,10 @@ Built into every request, with no configuration needed:
 - **Rate limiting** — proactively waits out the reset window when `x-ratelimit-remaining` hits 0, instead of letting requests fail with a 403
 - **Retries** — 3 attempts with 1s/2s/4s backoff on `5xx` and `429` responses
 - **ETag caching** — repeat `GET`s send `If-None-Match`; a `304` returns the cached body for free and doesn't count against your rate limit
+
+## Contributing
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for setup, the module pattern, and the PR process.
 
 ## License
 
