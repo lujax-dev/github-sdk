@@ -7,6 +7,21 @@
     "files": [
         "dist"
     ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lujax-dev/github-sdk.git"
+    },
+    "homepage": "https://github.com/lujax-dev/github-sdk#readme",
+    "bugs": {
+        "url": "https://github.com/lujax-dev/github-sdk/issues"
+    },
+    "author": {
+        "name": "Lewie Jackson",
+        "url": "https://github.com/LewieJ08"
+    },
+    "engines": {
+        "node": ">=18"
+    },
     "publishConfig": {
         "access": "public"
     },
