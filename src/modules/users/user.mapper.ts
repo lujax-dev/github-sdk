@@ -2,9 +2,9 @@ import {
     UpdateUserParams,
     UpdateUserPayload,
     User,
-    Contributer,
+    Contributor,
 } from "./user.types";
-import { UserDTO, ContributerDTO } from "./user.dto";
+import { UserDTO, ContributorDTO } from "./user.dto";
 
 export function mapUser(dto: UserDTO): User {
     return {
@@ -35,7 +35,7 @@ export function mapUsers(dtos: UserDTO[]): User[] {
     return dtos.map((dto) => mapUser(dto));
 }
 
-export function mapContributer(dto: ContributerDTO): Contributer {
+export function mapContributor(dto: ContributorDTO): Contributor {
     return {
         username: dto.login,
         id: dto.id,
@@ -61,8 +61,8 @@ export function mapContributer(dto: ContributerDTO): Contributer {
     };
 }
 
-export function mapContributers(dtos: ContributerDTO[]): Contributer[] {
-    return dtos.map((dto) => mapContributer(dto));
+export function mapContributors(dtos: ContributorDTO[]): Contributor[] {
+    return dtos.map((dto) => mapContributor(dto));
 }
 
 export function mapUpdateUserParams(

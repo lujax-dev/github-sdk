@@ -11,7 +11,7 @@ import {
     mapTransferRepositoryParams,
     mapUpdateRepositoryParams,
 } from "./repository.mapper";
-import { mapContributers } from "../users/user.mapper";
+import { mapContributors } from "../users/user.mapper";
 import {
     Repository,
     CreateRepositoryParams,
@@ -36,8 +36,8 @@ import {
     RepositoryTagDTO,
     TeamDTO,
 } from "./repository.dto";
-import { Contributer } from "../users/user.types";
-import { ContributerDTO } from "../users/user.dto";
+import { Contributor } from "../users/user.types";
+import { ContributorDTO } from "../users/user.dto";
 import { assertConfig } from "../../shared/utils/config.utils";
 
 export class RepositoryService {
@@ -255,21 +255,21 @@ export class RepositoryService {
     }
 
     /**
-     * Get all contributers of the configured repository
+     * Get all contributors of the configured repository
      *
      * @returns Array of contributors
      *
      * @example
      * ```ts
-     * const contributers = await github.repositories.getContributers();
+     * const contributors = await github.repositories.getContributors();
      * ```
      */
-    public async getContributers(): Promise<Contributer[]> {
+    public async getContributors(): Promise<Contributor[]> {
         assertConfig(this.client, ["owner", "repo"]);
-        const response = await this.client.request<ContributerDTO[]>(
+        const response = await this.client.request<ContributorDTO[]>(
             `${this.path}/contributors`,
         );
-        return mapContributers(response.data);
+        return mapContributors(response.data);
     }
 
     /**
@@ -586,10 +586,10 @@ export class RepositoryService {
      *
      * @example
      * ```ts
-     * github.repositories.disableVulnerbilityAlerts();
+     * github.repositories.disableVulnerabilityAlerts();
      * ```
      */
-    public async disableVulnerbilityAlerts(): Promise<boolean> {
+    public async disableVulnerabilityAlerts(): Promise<boolean> {
         assertConfig(this.client, ["owner", "repo"]);
         const response = await this.client.request(
             `${this.path}/vulnerability-alerts`,
