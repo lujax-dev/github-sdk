@@ -1,6 +1,6 @@
 {
     "name": "@lujax/github-sdk",
-    "version": "1.0.0",
+    "version": "1.0.0-rc.1",
     "description": "TypeScript-first GitHub REST API SDK - ergonomic, typed, near-zero dependencies",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
