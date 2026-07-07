@@ -1,0 +1,10 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "paths": {
+            "@lujax/github-sdk": ["./src/index.ts"]
+        }
+    },
+    "include": ["examples/**/*"],
+    "exclude": ["node_modules", "dist"]
+}
