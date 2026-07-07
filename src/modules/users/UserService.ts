@@ -65,7 +65,7 @@ export class UserService {
      */
     public async getById(accountId: number): Promise<User> {
         const response = await this.client.request<UserDTO>(
-            `${this.path}/${accountId}`,
+            `${this.authPath}/${accountId}`,
         );
         return mapUser(response.data);
     }

@@ -18,7 +18,7 @@ async function main() {
     );
 
     const user = await github.users.getAuthenticated();
-    console.log(`Authenticated as: ${user.login}`);
+    console.log(`Authenticated as: ${user.username}`);
 }
 
 main().catch((error) => {

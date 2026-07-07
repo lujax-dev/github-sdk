@@ -76,11 +76,18 @@ describe("UserService", () => {
     });
 
     describe("getById", () => {
-        it("calls GET /users/:id", async () => {
+        it("calls GET /user/:id, not /users/:id", async () => {
             const { service, mockRequest } = makeService();
             mockRequest.mockResolvedValue({ data: mockUserDto, status: 200 });
             await service.getById(42);
-            expect(mockRequest).toHaveBeenCalledWith("/users/42");
+            expect(mockRequest).toHaveBeenCalledWith("/user/42");
+        });
+
+        it("returns mapped User", async () => {
+            const { service, mockRequest } = makeService();
+            mockRequest.mockResolvedValue({ data: mockUserDto, status: 200 });
+            const result = await service.getById(42);
+            expect(result.username).toBe("testuser");
         });
     });
 
