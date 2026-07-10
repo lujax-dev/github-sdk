@@ -212,4 +212,213 @@ describe("PullRequestService", () => {
             expect(result.totalHours).toBeNull();
         });
     });
+
+    describe("create", () => {
+        it("calls POST /repos/:owner/:repo/pulls with the mapped payload", async () => {
+            const { service, mockRequest } = makeService();
+            mockRequest.mockResolvedValue({
+                data: mockPullRequestDto,
+                status: 201,
+            });
+            await service.create({
+                title: "Test PR",
+                head: "user:feature",
+                base: "main",
+                maintainerCanModify: true,
+            });
+            expect(mockRequest).toHaveBeenCalledWith(
+                "/repos/test-owner/test-repo/pulls",
+                {
+                    method: "POST",
+                    body: JSON.stringify({
+                        head: "user:feature",
+                        base: "main",
+                        title: "Test PR",
+                        maintainer_can_modify: true,
+                    }),
+                },
+            );
+        });
+
+        it("returns the mapped created PullRequest", async () => {
+            const { service, mockRequest } = makeService();
+            mockRequest.mockResolvedValue({
+                data: mockPullRequestDto,
+                status: 201,
+            });
+            const result = await service.create({
+                title: "Test PR",
+                head: "user:feature",
+                base: "main",
+            });
+            expect(result.number).toBe(8);
+            expect(result.head).toEqual({ ref: "feature", sha: "abc123" });
+        });
+    });
+
+    describe("update", () => {
+        it("calls PATCH /repos/:owner/:repo/pulls/:number with the mapped payload", async () => {
+            const { service, mockRequest } = makeService();
+            mockRequest.mockResolvedValue({
+                data: { ...mockPullRequestDto, title: "new title" },
+                status: 200,
+            });
+            const result = await service.update({
+                pullNumber: 8,
+                title: "new title",
+                state: "open",
+            });
+            expect(mockRequest).toHaveBeenCalledWith(
+                "/repos/test-owner/test-repo/pulls/8",
+                {
+                    method: "PATCH",
+                    body: JSON.stringify({
+                        title: "new title",
+                        state: "open",
+                    }),
+                },
+            );
+            expect(result.title).toBe("new title");
+        });
+    });
+
+    describe("listCommits", () => {
+        it("calls GET /repos/:owner/:repo/pulls/:number/commits and maps them", async () => {
+            const { service, mockRequest } = makeService();
+            mockRequest.mockResolvedValue({
+                data: [
+                    {
+                        sha: "abc123",
+                        node_id: "C_1",
+                        commit: {
+                            author: {
+                                name: "Mona",
+                                email: "mona@example.com",
+                                date: "2024-01-01T00:00:00Z",
+                            },
+                            committer: {
+                                name: "Mona",
+                                email: "mona@example.com",
+                                date: "2024-01-01T00:00:00Z",
+                            },
+                            message: "feat: add thing",
+                            tree: { sha: "t1", url: "" },
+                            url: "",
+                            comment_count: 0,
+                            verification: {
+                                verified: false,
+                                reason: "unsigned",
+                                signature: null,
+                                payload: null,
+                            },
+                        },
+                        url: "",
+                        html_url: "https://github.com/owner/repo/commit/abc123",
+                        author: mockUserDto,
+                        committer: mockUserDto,
+                        parents: [],
+                    },
+                ],
+                status: 200,
+            });
+            const result = await service.listCommits(8);
+            expect(mockRequest).toHaveBeenCalledWith(
+                "/repos/test-owner/test-repo/pulls/8/commits",
+            );
+            expect(result).toHaveLength(1);
+            expect(result[0].message).toBe("feat: add thing");
+        });
+    });
+
+    describe("listFiles", () => {
+        it("calls GET /repos/:owner/:repo/pulls/:number/files and maps them", async () => {
+            const { service, mockRequest } = makeService();
+            mockRequest.mockResolvedValue({
+                data: [
+                    {
+                        sha: "f1",
+                        filename: "src/index.ts",
+                        status: "modified",
+                        additions: 1,
+                        deletions: 0,
+                        changes: 1,
+                        blob_url: "",
+                        raw_url: "",
+                        contents_url: "",
+                        patch: "@@ -1 +1 @@",
+                    },
+                ],
+                status: 200,
+            });
+            const result = await service.listFiles(8);
+            expect(mockRequest).toHaveBeenCalledWith(
+                "/repos/test-owner/test-repo/pulls/8/files",
+            );
+            expect(result[0].name).toBe("src/index.ts");
+        });
+    });
+
+    describe("merge", () => {
+        it("calls PUT /repos/:owner/:repo/pulls/:number/merge with the mapped payload", async () => {
+            const { service, mockRequest } = makeService();
+            const mergeResponse = {
+                sha: "merged123",
+                merged: true,
+                message: "Pull Request successfully merged",
+            };
+            mockRequest.mockResolvedValue({ data: mergeResponse, status: 200 });
+            const result = await service.merge({
+                pullNumber: 8,
+                commitTitle: "Expand docs",
+                mergeMethod: "squash",
+            });
+            expect(mockRequest).toHaveBeenCalledWith(
+                "/repos/test-owner/test-repo/pulls/8/merge",
+                {
+                    method: "PUT",
+                    body: JSON.stringify({
+                        commit_title: "Expand docs",
+                        merge_method: "squash",
+                    }),
+                },
+            );
+            expect(result).toEqual(mergeResponse);
+        });
+    });
+
+    describe("updateBranch", () => {
+        it("calls PUT /repos/:owner/:repo/pulls/:number/update-branch", async () => {
+            const { service, mockRequest } = makeService();
+            const branchResponse = {
+                message: "Updating pull request branch.",
+                url: "https://api.github.com/repos/owner/repo/pulls/8",
+            };
+            mockRequest.mockResolvedValue({
+                data: branchResponse,
+                status: 202,
+            });
+            const result = await service.updateBranch(8, "abc123");
+            expect(mockRequest).toHaveBeenCalledWith(
+                "/repos/test-owner/test-repo/pulls/8/update-branch",
+                {
+                    method: "PUT",
+                    body: JSON.stringify({ expected_head_sha: "abc123" }),
+                },
+            );
+            expect(result).toEqual(branchResponse);
+        });
+
+        it("sends an undefined expected_head_sha when omitted", async () => {
+            const { service, mockRequest } = makeService();
+            mockRequest.mockResolvedValue({
+                data: { message: "ok", url: "" },
+                status: 202,
+            });
+            await service.updateBranch(8);
+            expect(mockRequest).toHaveBeenCalledWith(
+                "/repos/test-owner/test-repo/pulls/8/update-branch",
+                { method: "PUT", body: JSON.stringify({}) },
+            );
+        });
+    });
 });
