@@ -1,5 +1,8 @@
 # @lujax/github-sdk
 
+[![npm version](https://img.shields.io/npm/v/%40lujax%2Fgithub-sdk.svg)](https://www.npmjs.com/package/@lujax/github-sdk)
+[![CI](https://github.com/lujax-dev/github-sdk/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/lujax-dev/github-sdk/actions/workflows/ci.yml)
+
 A TypeScript-first, ergonomic wrapper around the [GitHub REST API](https://docs.github.com/en/rest). Calls `api.github.com` directly using native `fetch` — no Octokit, no third-party HTTP library.
 
 - **Clean TypeScript domain types** — camelCase interfaces instead of raw snake_case API responses
