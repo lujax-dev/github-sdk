@@ -2,6 +2,8 @@
 
 Thanks for taking a look. This project favours small, consistent, well-tested changes over clever ones — the notes below explain the conventions so a PR doesn't need a design discussion before it can be reviewed.
 
+By participating you agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
+
 ## Setup
 
 ```bash
