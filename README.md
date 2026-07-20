@@ -126,7 +126,7 @@ Built into every request, with no configuration needed:
 
 ## Contributing
 
-See [`CONTRIBUTING.md`](CONTRIBUTING.md) for setup, the module pattern, and the PR process.
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for setup, the module pattern, and the PR process. This project follows the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## License
 
